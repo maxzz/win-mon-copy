@@ -31,7 +31,7 @@ export function MainCopyPanel() {
         <div className="grid grid-rows-[auto_auto_1fr] gap-4 h-full">
             <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                    <Label>Debug Source Paths (one per line)</Label>
+                    <Label className="text-xs">Debug Source Paths (one per line)</Label>
                     <Textarea
                         value={sourcePathsDebug.join('\n')}
                         onChange={(e) => setSourcePathsDebug(e.target.value.split('\n'))}
@@ -39,7 +39,7 @@ export function MainCopyPanel() {
                     />
                 </div>
                 <div className="flex flex-col gap-2">
-                    <Label>Release Source Paths (one per line)</Label>
+                    <Label className="text-xs">Release Source Paths (one per line)</Label>
                     <Textarea
                         value={sourcePathsRelease.join('\n')}
                         onChange={(e) => setSourcePathsRelease(e.target.value.split('\n'))}
@@ -56,21 +56,21 @@ export function MainCopyPanel() {
                 >
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="debug" id="r-debug" />
-                        <Label htmlFor="r-debug">Debug</Label>
+                        <Label htmlFor="r-debug" className="text-xs">Debug</Label>
                     </div>
                     <div className="flex items-center space-x-2">
                         <RadioGroupItem value="release" id="r-release" />
-                        <Label htmlFor="r-release">Release</Label>
+                        <Label htmlFor="r-release" className="text-xs">Release</Label>
                     </div>
                 </RadioGroup>
 
                 <div className="flex-1" />
 
-                <Button onClick={handleCopy}>Copy Files</Button>
+                <Button onClick={handleCopy} className="text-xs">Copy Files</Button>
             </div>
 
             <div className="border rounded-md bg-muted/50 p-2 overflow-hidden flex flex-col">
-                <Label className="mb-2">Logs</Label>
+                <Label className="mb-2 text-xs">Logs</Label>
                 <ScrollArea className="flex-1 bg-background rounded border p-2 font-mono text-sm">
                     {logs.map((log, i) => (
                         <div key={i}>{log}</div>
