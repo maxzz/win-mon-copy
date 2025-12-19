@@ -32,7 +32,7 @@ export function MainCopyPanel() {
     return (
         <div className="grid grid-rows-[auto_auto_1fr] gap-4 h-full">
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-rows-2 gap-4">
                 <PathInput
                     label="Debug Source Paths (one per line)"
                     value={userData.sourcePathsDebug}
@@ -47,10 +47,10 @@ export function MainCopyPanel() {
 
             <div className="flex items-center justify-between gap-4 border p-4 rounded-md">
                 <SelectTm
+                    triggerClasses="w-32"
                     items={["Debug", "Release"]}
                     value={userData.isDebug ? "Debug" : "Release"}
                     onValueChange={(v) => appSettings.userData.isDebug = (v === "Debug")}
-                    triggerClasses="w-[100px]"
                 />
 
                 <Button size="sm" onClick={handleCopy}>Copy Files</Button>
