@@ -1,5 +1,7 @@
-import { useAtom, useAtomValue } from "jotai";
-import { sourcePathsDebugAtom, sourcePathsReleaseAtom, isDebugAtom, logsAtom } from "@/store/atoms-copy-files";
+import { useAtomValue } from "jotai";
+import { logsAtom } from "@/store/atoms-copy-files";
+import { useSnapshot } from "valtio";
+import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { Button } from "@/components/ui/shadcn/button";
 import { Textarea } from "@/components/ui/shadcn/textarea";
 import { SelectTm } from "@/components/ui/ui-local/4-select-tm";
@@ -9,14 +11,12 @@ import { R2MCalls } from "@/shared/2-gates-in-client-as-atoms/commands-to-main/1
 import { useEffect, useRef } from "react";
 
 export function MainCopyPanel() {
-    const [sourcePathsDebug, setSourcePathsDebug] = useAtom(sourcePathsDebugAtom);
-    const [sourcePathsRelease, setSourcePathsRelease] = useAtom(sourcePathsReleaseAtom);
-    const [isDebug, setIsDebug] = useAtom(isDebugAtom);
+    const { userData } = useSnapshot(appSettings);
     const logs = useAtomValue(logsAtom);
 
     const handleCopy = () => {
-        const paths = isDebug ? sourcePathsDebug : sourcePathsRelease;
-        R2MCalls.copyFiles({ mode: isDebug ? 'debug' : 'release', sourcePaths: paths });
+        const paths = userData.isDebug ? userData.sourcePathsDebug : userData.sourcePathsRelease;
+        R2MCalls.copyFiles({ mode: userData.isDebug ? 'debug' : 'release', sourcePaths: Array.from(paths) });
     };
 
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -35,21 +35,21 @@ export function MainCopyPanel() {
             <div className="grid grid-cols-2 gap-4">
                 <PathInput
                     label="Debug Source Paths (one per line)"
-                    value={sourcePathsDebug}
-                    onChange={setSourcePathsDebug}
+                    value={userData.sourcePathsDebug}
+                    onChange={(v) => appSettings.userData.sourcePathsDebug = v}
                 />
                 <PathInput
                     label="Release Source Paths (one per line)"
-                    value={sourcePathsRelease}
-                    onChange={setSourcePathsRelease}
+                    value={userData.sourcePathsRelease}
+                    onChange={(v) => appSettings.userData.sourcePathsRelease = v}
                 />
             </div>
 
             <div className="flex items-center justify-between gap-4 border p-4 rounded-md">
                 <SelectTm
                     items={["Debug", "Release"]}
-                    value={isDebug ? "Debug" : "Release"}
-                    onValueChange={(v) => setIsDebug(v === "Debug")}
+                    value={userData.isDebug ? "Debug" : "Release"}
+                    onValueChange={(v) => appSettings.userData.isDebug = (v === "Debug")}
                     triggerClasses="w-[100px]"
                 />
 
@@ -71,7 +71,7 @@ export function MainCopyPanel() {
     );
 }
 
-function PathInput({ label, value, onChange }: { label: string, value: string[], onChange: (v: string[]) => void; }) {
+function PathInput({ label, value, onChange }: { label: string, value: readonly string[], onChange: (v: string[]) => void; }) {
     return (
         <div className="flex flex-col gap-2">
             <Label>

@@ -1,17 +1,19 @@
 import { proxy, subscribe } from 'valtio';
 import { mergeDefaultAndLoaded, themeApplyMode } from '@/utils';
 //import { sendNapiOptions } from '@/shared/2-gates-in-client-as-atoms';
-import { type AppUISettings, defaultAppUISettings } from '../8-app-ui';
+import { type AppUISettings, defaultAppUISettings, type UserData, defaultUserData } from '../8-app-ui';
 
 const STORAGE_UI_KEY = 'pmat-win-mon:ui';
 const STORAGE_UI_VER = 'v2';
 
 type AppUi = {
     appUi: AppUISettings;           // App UI settings: theme, divider, etc.
+    userData: UserData;             // User data: source paths, etc.
 };
 
 const initialAppUi: AppUi = {
     appUi: defaultAppUISettings,
+    userData: defaultUserData,
 };
 
 export const appSettings = proxy<AppUi>(loadUiInitialState());

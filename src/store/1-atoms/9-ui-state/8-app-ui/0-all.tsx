@@ -8,9 +8,21 @@ export type AppUISettings = {
     sawTab: "raw" | "info";
 };
 
+export type UserData = {
+    sourcePathsDebug: string[];
+    sourcePathsRelease: string[];
+    isDebug: boolean;
+};
+
 export const defaultAppUISettings: AppUISettings = {
     theme: 'light',
     uiAdvanced: defaultUiAdvancedState,
     accordionsOpened: {},
     sawTab: 'raw',
+};
+
+export const defaultUserData: UserData = {
+    sourcePathsDebug: [],
+    sourcePathsRelease: [],
+    isDebug: true,
 };
