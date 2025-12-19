@@ -30,22 +30,16 @@ export function MainCopyPanel() {
     return (
         <div className="grid grid-rows-[auto_auto_1fr] gap-4 h-full">
             <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                    <Label className="text-xs">Debug Source Paths (one per line)</Label>
-                    <Textarea
-                        value={sourcePathsDebug.join('\n')}
-                        onChange={(e) => setSourcePathsDebug(e.target.value.split('\n'))}
-                        className="h-32"
-                    />
-                </div>
-                <div className="flex flex-col gap-2">
-                    <Label className="text-xs">Release Source Paths (one per line)</Label>
-                    <Textarea
-                        value={sourcePathsRelease.join('\n')}
-                        onChange={(e) => setSourcePathsRelease(e.target.value.split('\n'))}
-                        className="h-32"
-                    />
-                </div>
+                <PathInput
+                    label="Debug Source Paths (one per line)"
+                    value={sourcePathsDebug}
+                    onChange={setSourcePathsDebug}
+                />
+                <PathInput
+                    label="Release Source Paths (one per line)"
+                    value={sourcePathsRelease}
+                    onChange={setSourcePathsRelease}
+                />
             </div>
 
             <div className="flex items-center gap-4 border p-4 rounded-md">
@@ -78,6 +72,19 @@ export function MainCopyPanel() {
                     <div ref={scrollRef} />
                 </ScrollArea>
             </div>
+        </div>
+    );
+}
+
+function PathInput({ label, value, onChange }: { label: string, value: string[], onChange: (v: string[]) => void }) {
+    return (
+        <div className="flex flex-col gap-2">
+            <Label className="text-xs">{label}</Label>
+            <Textarea
+                value={value.join('\n')}
+                onChange={(e) => onChange(e.target.value.split('\n'))}
+                className="h-32"
+            />
         </div>
     );
 }
