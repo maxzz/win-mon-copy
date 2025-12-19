@@ -1,3 +1,5 @@
+export * from './radix-icons';
+
 export * from './01-copy';
 export * from './02-play';
 export * from './03-stop';
