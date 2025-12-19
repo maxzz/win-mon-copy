@@ -3,7 +3,7 @@ import { logsAtom } from "@/store/atoms-copy-files";
 import { useSnapshot } from "valtio";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { Button } from "@/components/ui/shadcn/button";
-import { Textarea } from "@/components/ui/shadcn/textarea";
+import { PathInput } from "./2-path-input/path-input";
 import { SelectTm } from "@/components/ui/ui-local/4-select-tm";
 import { Label } from "@/components/ui/shadcn/label";
 import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
@@ -71,18 +71,5 @@ export function MainCopyPanel() {
     );
 }
 
-function PathInput({ label, value, onChange }: { label: string, value: readonly string[], onChange: (v: string[]) => void; }) {
-    return (
-        <div className="flex flex-col gap-2">
-            <Label>
-                {label}
-            </Label>
-            <Textarea
-                className="h-32"
-                value={value.join('\n')}
-                onChange={(e) => onChange(e.target.value.split('\n'))}
-            />
-        </div>
-    );
-}
+
 
