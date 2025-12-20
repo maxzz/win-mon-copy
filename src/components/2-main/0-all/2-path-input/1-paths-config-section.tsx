@@ -1,6 +1,6 @@
 import { useSnapshot } from "valtio";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
-import { PathInput } from "./path-input";
+import { PathInput } from "./2-path-input";
 import { cn } from "@/utils";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -8,7 +8,7 @@ export function PathsConfigSection({ className, ...rest }: React.ComponentProps<
     const { userData, appUi } = useSnapshot(appSettings);
 
     return (
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
             {appUi.showFilePanels && (
                 <motion.div
                     initial={{ height: 0, opacity: 0, overflow: 'hidden' }}

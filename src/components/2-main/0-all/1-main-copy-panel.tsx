@@ -3,7 +3,7 @@ import { logsAtom } from "@/store/atoms-copy-files";
 import { useSnapshot } from "valtio";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { Button } from "@/components/ui/shadcn/button";
-import { PathsConfigSection } from "./2-path-input/paths-config-section";
+import { PathsConfigSection } from "./2-path-input/1-paths-config-section";
 import { SelectTm } from "@/components/ui/ui-local/4-select-tm";
 import { Label } from "@/components/ui/shadcn/label";
 import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
