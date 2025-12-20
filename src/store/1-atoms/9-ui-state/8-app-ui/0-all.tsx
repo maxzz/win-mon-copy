@@ -6,6 +6,7 @@ export type AppUISettings = {
     uiAdvanced: UiAdvancedState;
     accordionsOpened: Record<string, boolean>;
     sawTab: "raw" | "info";
+    showFilePanels: boolean;
 };
 
 export type UserData = {
@@ -19,6 +20,7 @@ export const defaultAppUISettings: AppUISettings = {
     uiAdvanced: defaultUiAdvancedState,
     accordionsOpened: {},
     sawTab: 'raw',
+    showFilePanels: true,
 };
 
 export const defaultUserData: UserData = {
