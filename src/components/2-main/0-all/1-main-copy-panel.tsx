@@ -3,7 +3,7 @@ import { logsAtom } from "@/store/atoms-copy-files";
 import { useSnapshot } from "valtio";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { Button } from "@/components/ui/shadcn/button";
-import { PathInput } from "./2-path-input/path-input";
+import { PathsConfigSection } from "./2-path-input/paths-config-section";
 import { SelectTm } from "@/components/ui/ui-local/4-select-tm";
 import { Label } from "@/components/ui/shadcn/label";
 import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
@@ -57,24 +57,6 @@ export function MainCopyPanel() {
                     <div ref={scrollRef} />
                 </ScrollArea>
             </div>
-        </div>
-    );
-}
-
-function PathsConfigSection({ className, ...rest }: React.ComponentProps<"div">) {
-    const { userData } = useSnapshot(appSettings);
-    return (
-        <div className={cn("grid grid-rows-2 gap-4", className)} {...rest}>
-            <PathInput
-                label="Debug Source Paths (one per line)"
-                value={userData.sourcePathsDebug}
-                onChange={(v) => appSettings.userData.sourcePathsDebug = v}
-            />
-            <PathInput
-                label="Release Source Paths (one per line)"
-                value={userData.sourcePathsRelease}
-                onChange={(v) => appSettings.userData.sourcePathsRelease = v}
-            />
         </div>
     );
 }
