@@ -47,8 +47,10 @@ export function MainCopyPanel() {
                 <Button size="sm" onClick={handleCopy}>Copy Files</Button>
             </div>
 
-            <div className="border rounded-md bg-muted/50 p-2 overflow-hidden flex flex-col">
-                <Label className="mb-2">Logs</Label>
+            <div className="p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col">
+                <Label className="mb-2">
+                    Logs
+                </Label>
                 <ScrollArea className="flex-1 bg-background rounded border p-2 font-mono text-sm">
                     {logs.map(
                         (log, i) => (
