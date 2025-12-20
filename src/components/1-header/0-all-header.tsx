@@ -2,9 +2,9 @@ import { type ComponentPropsWithoutRef } from "react";
 import { classNames } from "@/utils";
 import { IconMicroscope } from "../ui/icons/normal";
 import { PopoverSettings } from "../4-dialogs/7-settings-dialog";
-import { TopMenu } from "./1-top-menu";
+import { TopMenu } from "./4-top-menu";
 import { ButtonQuickToggleThemeMode } from "./3-button-theme-toggle";
-import { ButtonToggleFilePanels } from "./4-button-file-panels-toggle";
+import { ButtonToggleFilePanels } from "./1-button-file-panels-toggle";
 
 export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     return (
@@ -20,8 +20,8 @@ export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<
 
                 <div className="flex items-center gap-1">
                     {/* Add here single button to quick toggle dark/light theme without system mode */}
-                    <PopoverSettings />
                     <ButtonToggleFilePanels />
+                    <PopoverSettings />
                     <ButtonQuickToggleThemeMode />
                     <TopMenu />
                 </div>
