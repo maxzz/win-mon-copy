@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/shadcn/input-group";
 
 import { useEffect } from "react";
+import { Input } from "@/components/ui/shadcn/input";
 
 export function PathInput({ label, value, onChange }: { label: string, value: readonly PathEntry[], onChange: (v: PathEntry[]) => void; }) {
 
@@ -43,7 +44,7 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
     return (
         <div className="p-2 border rounded-md bg-muted/50 overflow-hidden  flex flex-col gap-2">
             <div className="flex items-center justify-between">
-                <Label className="mb-2">
+                <Label>
                     {label}
                 </Label>
                 <Button className="size-6" variant="outline" size="icon" onClick={addPath}>
@@ -52,19 +53,21 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
             </div>
 
             <Reorder.Group
+                className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-border flex flex-col"
                 axis="y"
+                layoutScroll
+                style={{ overflowY: "scroll" }}
                 values={value as PathEntry[]}
                 onReorder={onChange}
-                className="flex flex-col gap-1 max-h-48 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border"
             >
                 {value.map(
                     (entry) => (
                         <PathEntryRow
-                            key={entry.id}
                             entry={entry}
                             onToggle={() => toggleInUse(entry.id)}
                             onUpdate={(path) => updatePath(entry.id, path)}
                             onRemove={() => removePath(entry.id)}
+                            key={entry.id}
                         />
                     )
                 )}
@@ -84,55 +87,51 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
 
     return (
         <Reorder.Item
-            className="group select-none"
+            className="group relative select-none"
             value={entry}
             dragListener={false}
             dragControls={dragControls}
-            whileDrag={{ scale: 1.02, zIndex: 50, }}
+            whileDrag={{ scale: 1, zIndex: 50, }}
         >
-            <InputGroup className={cn("h-7 min-h-7 bg-background/50 transition-all", !entry.inUse && "opacity-60 bg-muted/20")}>
+            <Button
+                className={cn("absolute top-0 left-0 size-1 transition-colors", entry.inUse ? "text-primary" : "text-muted-foreground/30")}
+                variant="ghost"
+                size="icon"
+                onClick={onToggle}
+                title={entry.inUse ? "Disable path" : "Enable path"}
+            >
+                {entry.inUse ? <Eye className="size-1" /> : <EyeOff className="size-1" />}
+            </Button>
 
-                <InputGroupAddon className="px-0.5" align="inline-start">
-                    <InputGroupButton
-                        className={cn("size-6 transition-colors", entry.inUse ? "text-primary" : "text-muted-foreground/30")}
-                        variant="ghost"
-                        size="icon-xs"
-                        onClick={onToggle}
-                        title={entry.inUse ? "Disable path" : "Enable path"}
-                    >
-                        {entry.inUse ? <Eye className="size-3" /> : <EyeOff className="size-3" />}
-                    </InputGroupButton>
-                </InputGroupAddon>
+            <Input
+                className={cn("px-8 py-1 h-full text-xs transition-all select-text", !entry.inUse && "text-muted-foreground/40 line-through")}
+                value={entry.path}
+                onChange={(e) => onUpdate(e.target.value)}
+                placeholder="Enter path..."
+            />
 
-                <InputGroupInput
-                    className={cn("py-1 px-1 h-full text-xs transition-all select-text", !entry.inUse && "text-muted-foreground/40 line-through")}
-                    value={entry.path}
-                    onChange={(e) => onUpdate(e.target.value)}
-                    placeholder="Enter path..."
-                />
+            <div className="absolute top-0 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button
+                    className="size-6 text-muted-foreground hover:text-destructive"
+                    variant="ghost"
+                    size="icon"
+                    onClick={onRemove}
+                    title="Remove path"
+                >
+                    <Trash2 className="size-3" />
+                </Button>
 
-                <InputGroupAddon className="px-0.5 opacity-0 group-hover:opacity-100 transition-opacity" align="inline-end">
-                    <InputGroupButton
-                        className="size-6 text-muted-foreground hover:text-destructive"
-                        variant="ghost"
-                        size="icon-xs"
-                        onClick={onRemove}
-                        title="Remove path"
-                    >
-                        <Trash2 className="size-3" />
-                    </InputGroupButton>
-                    <div
-                        className="size-6 text-muted-foreground/50 hover:text-muted-foreground active:cursor-grabbing touch-none select-none cursor-grab flex items-center justify-center"
-                        onPointerDown={(e) => {
-                            e.preventDefault();
-                            dragControls.start(e);
-                        }}
-                        title="Drag to reorder"
-                    >
-                        <GripVertical className="size-3.5" />
-                    </div>
-                </InputGroupAddon>
-            </InputGroup>
+                <div
+                    className="size-6 text-muted-foreground/50 hover:text-muted-foreground active:cursor-grabbing touch-none select-none cursor-grab flex items-center justify-center"
+                    onPointerDown={(e) => {
+                        e.preventDefault();
+                        dragControls.start(e);
+                    }}
+                    title="Drag to reorder"
+                >
+                    <GripVertical className="size-3.5" />
+                </div>
+            </div>
         </Reorder.Item>
     );
 }
