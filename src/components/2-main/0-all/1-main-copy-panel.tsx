@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/shadcn/label";
 import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
 import { R2MCalls } from "@/shared/2-gates-in-client-as-atoms/commands-to-main/1-calls-renderer-to-main";
 import { useEffect, useRef } from "react";
+import { cn } from "@/utils";
 
 export function MainCopyPanel() {
     const { userData } = useSnapshot(appSettings);
@@ -32,18 +33,7 @@ export function MainCopyPanel() {
     return (
         <div className="grid grid-rows-[auto_auto_1fr] gap-4 h-full">
 
-            <div className="grid grid-rows-2 gap-4">
-                <PathInput
-                    label="Debug Source Paths (one per line)"
-                    value={userData.sourcePathsDebug}
-                    onChange={(v) => appSettings.userData.sourcePathsDebug = v}
-                />
-                <PathInput
-                    label="Release Source Paths (one per line)"
-                    value={userData.sourcePathsRelease}
-                    onChange={(v) => appSettings.userData.sourcePathsRelease = v}
-                />
-            </div>
+            <PathsConfigSection />
 
             <div className="flex items-center justify-between gap-4 border p-4 rounded-md">
                 <SelectTm
@@ -71,5 +61,20 @@ export function MainCopyPanel() {
     );
 }
 
-
-
+function PathsConfigSection({ className, ...rest }: React.ComponentProps<"div">) {
+    const { userData } = useSnapshot(appSettings);
+    return (
+        <div className={cn("grid grid-rows-2 gap-4", className)} {...rest}>
+            <PathInput
+                label="Debug Source Paths (one per line)"
+                value={userData.sourcePathsDebug}
+                onChange={(v) => appSettings.userData.sourcePathsDebug = v}
+            />
+            <PathInput
+                label="Release Source Paths (one per line)"
+                value={userData.sourcePathsRelease}
+                onChange={(v) => appSettings.userData.sourcePathsRelease = v}
+            />
+        </div>
+    );
+}
