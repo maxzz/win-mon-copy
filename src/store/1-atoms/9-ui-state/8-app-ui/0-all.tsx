@@ -9,6 +9,7 @@ export type AppUISettings = {
 };
 
 export type PathEntry = {
+    id: string;
     inUse: boolean;
     path: string;
 };

@@ -6,27 +6,31 @@ import { cn } from "@/utils";
 import { PlusIcon, Eye, EyeOff, GripVertical, Trash2 } from "lucide-react";
 import { Reorder, useDragControls } from "motion/react";
 
+import { useEffect } from "react";
+
 export function PathInput({ label, value, onChange }: { label: string, value: readonly PathEntry[], onChange: (v: PathEntry[]) => void; }) {
 
-    const toggleInUse = (index: number) => {
-        const nextValue = [...value];
-        nextValue[index] = { ...nextValue[index], inUse: !nextValue[index].inUse };
-        onChange(nextValue);
+    useEffect(() => {
+        const needsIds = value.some(e => !e.id);
+        if (needsIds) {
+            onChange(value.map(e => e.id ? e : { ...e, id: crypto.randomUUID() }));
+        }
+    }, [value, onChange]);
+
+    const toggleInUse = (id: string) => {
+        onChange(value.map(e => e.id === id ? { ...e, inUse: !e.inUse } : e));
     };
 
-    const updatePath = (index: number, path: string) => {
-        const nextValue = [...value];
-        nextValue[index] = { ...nextValue[index], path };
-        onChange(nextValue);
+    const updatePath = (id: string, path: string) => {
+        onChange(value.map(e => e.id === id ? { ...e, path } : e));
     };
 
-    const removePath = (index: number) => {
-        const nextValue = value.filter((_, i) => i !== index);
-        onChange(nextValue);
+    const removePath = (id: string) => {
+        onChange(value.filter(e => e.id !== id));
     };
 
     const addPath = () => {
-        onChange([...value, { path: '', inUse: true }]);
+        onChange([...value, { id: crypto.randomUUID(), path: '', inUse: true }]);
     };
 
     return (
@@ -42,18 +46,18 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
 
             <Reorder.Group
                 axis="y"
-                values={[...value]}
+                values={value as PathEntry[]}
                 onReorder={onChange}
                 className="flex flex-col gap-1 max-h-48 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-border"
             >
                 {value.map(
-                    (entry, idx) => (
+                    (entry) => (
                         <PathEntryRow
-                            key={idx}
+                            key={entry.id}
                             entry={entry}
-                            onToggle={() => toggleInUse(idx)}
-                            onUpdate={(path) => updatePath(idx, path)}
-                            onRemove={() => removePath(idx)}
+                            onToggle={() => toggleInUse(entry.id)}
+                            onUpdate={(path) => updatePath(entry.id, path)}
+                            onRemove={() => removePath(entry.id)}
                         />
                     )
                 )}
@@ -76,7 +80,12 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
             value={entry}
             dragListener={false}
             dragControls={dragControls}
-            className="flex items-center gap-1 group"
+            className="flex items-center gap-1 group bg-background/50 rounded-md select-none"
+            whileDrag={{ 
+                scale: 1.02, 
+                backgroundColor: "var(--background)",
+                boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)" 
+            }}
         >
             <Button
                 className={cn(
@@ -93,7 +102,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
 
             <Input
                 className={cn(
-                    "h-7 py-1 px-2 text-xs transition-all",
+                    "h-7 py-1 px-2 text-xs transition-all select-text",
                     !entry.inUse && "text-muted-foreground/40 line-through bg-muted/20 border-transparent"
                 )}
                 value={entry.path}
@@ -112,8 +121,11 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
                     <Trash2 className="size-3" />
                 </Button>
                 <div
-                    className="size-7 flex items-center justify-center cursor-grab active:cursor-grabbing text-muted-foreground/50 hover:text-muted-foreground"
-                    onPointerDown={(e) => dragControls.start(e)}
+                    className="size-7 flex items-center justify-center cursor-grab active:cursor-grabbing text-muted-foreground/50 hover:text-muted-foreground touch-none select-none"
+                    onPointerDown={(e) => {
+                        e.preventDefault();
+                        dragControls.start(e);
+                    }}
                     title="Drag to reorder"
                 >
                     <GripVertical className="size-4" />
