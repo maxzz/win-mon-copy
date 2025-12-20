@@ -12,7 +12,7 @@ import { useEffect, useRef } from "react";
 import { cn } from "@/utils";
 
 export function MainCopyPanel() {
-    const { userData, appUi } = useSnapshot(appSettings);
+    const { userData } = useSnapshot(appSettings);
     const logs = useAtomValue(logsAtom);
 
     const handleCopy = () => {
@@ -33,7 +33,7 @@ export function MainCopyPanel() {
     return (
         <div className="grid grid-rows-[auto_auto_1fr] gap-4 h-full">
 
-            {appUi.showFilePanels && <PathsConfigSection />}
+            <PathsConfigSection />
 
             <div className="flex items-center justify-between gap-4 border p-4 rounded-md">
                 <SelectTm

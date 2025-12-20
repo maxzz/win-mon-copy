@@ -4,7 +4,12 @@ import { PathInput } from "./path-input";
 import { cn } from "@/utils";
 
 export function PathsConfigSection({ className, ...rest }: React.ComponentProps<"div">) {
-    const { userData } = useSnapshot(appSettings);
+    const { userData, appUi } = useSnapshot(appSettings);
+
+    if (!appUi.showFilePanels) {
+        return null;
+    }
+
     return (
         <div className={cn("grid grid-rows-2 gap-4", className)} {...rest}>
             <PathInput
