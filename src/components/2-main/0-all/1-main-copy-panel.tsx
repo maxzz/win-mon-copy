@@ -16,8 +16,9 @@ export function MainCopyPanel() {
     const logs = useAtomValue(logsAtom);
 
     const handleCopy = () => {
-        const paths = userData.isDebug ? userData.sourcePathsDebug : userData.sourcePathsRelease;
-        R2MCalls.copyFiles({ mode: userData.isDebug ? 'debug' : 'release', sourcePaths: Array.from(paths) });
+        const pathEntries = userData.isDebug ? userData.sourcePathsDebug : userData.sourcePathsRelease;
+        const sourcePaths = pathEntries.filter(p => p.inUse).map(p => p.path);
+        R2MCalls.copyFiles({ mode: userData.isDebug ? 'debug' : 'release', sourcePaths });
     };
 
     const scrollRef = useRef<HTMLDivElement>(null);

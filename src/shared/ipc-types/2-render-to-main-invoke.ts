@@ -36,8 +36,8 @@ export namespace R2MInvoke { // Main from Renderer invoke and get result
 
         : T extends GetConfig
         ? {
-            sourcePathsDebug: string[];
-            sourcePathsRelease: string[];
+            sourcePathsDebug: { path: string; inUse: boolean; }[];
+            sourcePathsRelease: { path: string; inUse: boolean; }[];
         }
 
         : T extends GetZoomLevel             //'r2mi:get-zoom-level'

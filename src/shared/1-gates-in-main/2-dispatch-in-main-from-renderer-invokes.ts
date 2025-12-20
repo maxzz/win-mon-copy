@@ -24,7 +24,7 @@ export async function invokeFromRendererInMain(data: R2MInvoke.AllInvokes): Prom
     }
 }
 
-function getConfig(): { sourcePathsDebug: string[]; sourcePathsRelease: string[]; } {
+function getConfig(): { sourcePathsDebug: { path: string; inUse: boolean; }[]; sourcePathsRelease: { path: string; inUse: boolean; }[]; } {
     return {
         sourcePathsDebug: [],
         sourcePathsRelease: [],

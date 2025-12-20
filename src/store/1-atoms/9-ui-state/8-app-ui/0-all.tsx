@@ -8,9 +8,14 @@ export type AppUISettings = {
     showFilePanels: boolean;
 };
 
+export type PathEntry = {
+    inUse: boolean;
+    path: string;
+};
+
 export type UserData = {
-    sourcePathsDebug: string[];
-    sourcePathsRelease: string[];
+    sourcePathsDebug: PathEntry[];
+    sourcePathsRelease: PathEntry[];
     isDebug: boolean;
 };
 

@@ -32,8 +32,8 @@ export namespace R2M { // Main from Renderer
     export type SaveConfig = {
         type: 'r2m:save-config';
         config: {
-            sourcePathsDebug: string[];
-            sourcePathsRelease: string[];
+            sourcePathsDebug: { path: string; inUse: boolean; }[];
+            sourcePathsRelease: { path: string; inUse: boolean; }[];
         };
     };
 
