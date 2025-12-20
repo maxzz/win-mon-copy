@@ -70,26 +70,16 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
     );
 }
 
-function PathEntryRow({
-    entry,
-    onToggle,
-    onUpdate,
-    onRemove
-}: {
-    entry: PathEntry;
-    onToggle: () => void;
-    onUpdate: (path: string) => void;
-    onRemove: () => void;
-}) {
+function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntry; onToggle: () => void; onUpdate: (path: string) => void; onRemove: () => void; }) {
     return (
         <div className="flex items-center gap-1 group">
             <Button
-                variant="ghost"
-                size="icon"
                 className={cn(
                     "size-7 shrink-0 transition-colors",
                     entry.inUse ? "text-primary" : "text-muted-foreground/30"
                 )}
+                variant="ghost"
+                size="icon"
                 onClick={onToggle}
                 title={entry.inUse ? "Disable path" : "Enable path"}
             >
@@ -118,4 +108,3 @@ function PathEntryRow({
         </div>
     );
 }
-
