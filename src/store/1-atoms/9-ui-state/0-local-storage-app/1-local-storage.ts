@@ -3,8 +3,8 @@ import { mergeDefaultAndLoaded, themeApplyMode } from '@/utils';
 //import { sendNapiOptions } from '@/shared/2-gates-in-client-as-atoms';
 import { type AppUISettings, defaultAppUISettings, type UserData, defaultUserData } from '../8-app-ui';
 
-const STORAGE_UI_KEY = 'pmat-win-mon:ui';
-const STORAGE_UI_VER = 'v2';
+const STORAGE_UI_KEY = 'win-mon-copy:ui';
+const STORAGE_UI_VER = 'v1';
 
 type AppUi = {
     appUi: AppUISettings;           // App UI settings: theme, divider, etc.

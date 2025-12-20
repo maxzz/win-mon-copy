@@ -3,7 +3,7 @@ import { mergeDefaultAndLoaded } from '@/utils';
 //import { sendNapiOptions } from '@/shared/2-gates-in-client-as-atoms';
 import { type DebugMonitorState, initialDebugMonitorState } from './2-local-storage-debug-monitor';
 
-const STORAGE_UI_KEY = 'pmat-win-mon:debug';
+const STORAGE_UI_KEY = 'win-mon-copy:debug';
 const STORAGE_UI_VER = 'v1';
 
 type DebugState = {
