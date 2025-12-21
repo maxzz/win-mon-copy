@@ -86,6 +86,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
             dragListener={false}
             dragControls={dragControls}
             value={entry}
+            variants={parentVariants}
         >
             <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
 
@@ -96,28 +97,24 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     );
 }
 
-function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
-    return (
-        <Input
-            className={cn(
-                "pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none transition-all",
-                !inUse && "text-muted-foreground/40 line-through bg-muted/5"
-            )}
-            value={path}
-            onChange={(e) => onUpdate(e.target.value)}
-            placeholder="Enter path..."
-        />
-    );
-}
+const parentVariants: Variants = {
+    initial: { },
+    hovered: { }
+};
+
+const rowActionsVariants: Variants = {
+    initial: { opacity: 0, scale: 0.1, x: 100 },
+    hovered: { opacity: 1, scale: 1, x: 0 }
+};
 
 function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void; dragControls: DragControls; variants: Variants; }) {
     return (
         <motion.div
-            className="absolute top-0.5 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 1transition-opacity"
             //whileHover="hover"
-            initial="initial"
+            // initial="initial"
             variants={variants}
-            transition={{ duration: 0.2, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 1.52, delay: 0.1, ease: "easeOut" }}
         >
             <Button
                 className="size-6 text-muted-foreground hover:text-destructive"
@@ -167,7 +164,16 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
     );
 }
 
-const rowActionsVariants: Variants = {
-    initial: { opacity: 0, scale: 0.5 },
-    hover: { opacity: 1, scale: 1 }
-};
+function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
+    return (
+        <Input
+            className={cn(
+                "pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none transition-all",
+                !inUse && "text-muted-foreground/40 line-through bg-muted/5"
+            )}
+            value={path}
+            onChange={(e) => onUpdate(e.target.value)}
+            placeholder="Enter path..."
+        />
+    );
+}
