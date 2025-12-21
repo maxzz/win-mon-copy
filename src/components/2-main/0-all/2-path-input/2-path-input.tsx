@@ -81,40 +81,72 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     return (
         <Reorder.Item
             className="group relative h-7 select-none"
-            whileHover="hover"
-            whileDrag={{ scale: 1, zIndex: 50, }}
+            whileHover="hovered"
+            //whileDrag={{ scale: 1, zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
             value={entry}
+
+            initial="initial"
             variants={parentVariants}
         >
             <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
 
             <EntryInput inUse={entry.inUse} path={entry.path} onUpdate={onUpdate} />
 
-            <RowActions onRemove={onRemove} dragControls={dragControls} variants={rowActionsVariants} />
+            {/* <RowActions onRemove={onRemove} dragControls={dragControls} variants={rowActionsVariants} /> */}
+
+            <motion.div
+                // className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1 1opacity-0 1group-hover:opacity-100 1transition-opacity"
+                className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1"
+                // initial="initial"
+                variants={rowActionsVariants}
+                // transition={{ duration: 1.52, delay: 0.1, ease: "easeOut" }}
+            >
+                <Button
+                    className="size-6 text-muted-foreground hover:text-destructive"
+                    variant="ghost"
+                    size="icon"
+                    onClick={onRemove}
+                    title="Remove path"
+                >
+                    <Trash2 className="size-3" />
+                </Button>
+
+                <div
+                    className="size-6 text-muted-foreground/50 hover:text-muted-foreground active:cursor-grabbing touch-none select-none cursor-grab flex items-center justify-center"
+                    onPointerDown={(e) => {
+                        e.preventDefault();
+                        dragControls.start(e);
+                    }}
+                    title="Drag to reorder"
+                >
+                    <GripVertical className="size-3.5" />
+                </div>
+            </motion.div>
+
         </Reorder.Item>
     );
 }
 
 const parentVariants: Variants = {
-    initial: { },
-    hovered: { }
+    initial: {},
+    hovered: {}
 };
 
 const rowActionsVariants: Variants = {
-    initial: { opacity: 0, scale: 0.1, x: 100 },
+    initial: { opacity: 0, scale: 1.5, x: 10 },
     hovered: { opacity: 1, scale: 1, x: 0 }
 };
 
 function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void; dragControls: DragControls; variants: Variants; }) {
     return (
         <motion.div
-            className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 1transition-opacity"
-            //whileHover="hover"
+            // className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1 1opacity-0 1group-hover:opacity-100 1transition-opacity"
+            className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1"
             // initial="initial"
             variants={variants}
-            transition={{ duration: 1.52, delay: 0.1, ease: "easeOut" }}
+        // transition={{ duration: 1.52, delay: 0.1, ease: "easeOut" }}
         >
             <Button
                 className="size-6 text-muted-foreground hover:text-destructive"
