@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { cn } from "@/utils";
+import { classNames } from "@/utils";
 import { Reorder, useDragControls, motion, AnimatePresence, type DragControls, type Variants } from "motion/react";
 import { Button } from "@/components/ui/shadcn/button";
 import { Label } from "@/components/ui/shadcn/label";
 import { Input } from "@/components/ui/shadcn/input";
-import { PlusIcon, GripVertical, Trash2 } from "lucide-react";
-import { IconEyeClosed, IconEyeOn } from "@/components/ui/icons/normal/radix-icons";
+import { PlusIcon, Trash2 } from "lucide-react";
+import { IconEyeClosed, IconEyeOn, IconRadix_DragHandleDots2 } from "@/components/ui/icons/normal/radix-icons";
 import { PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui/0-all";
 
 export function PathInput({ label, value, onChange }: { label: string, value: readonly PathEntry[], onChange: (v: PathEntry[]) => void; }) {
@@ -81,7 +81,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     return (
         <Reorder.Item
             className="group relative h-7 select-none"
-            whileDrag={{ backgroundColor: "var(--color-foreground)", color: "var(--color-background)", zIndex: 50, }}
+            // whileDrag={{ backgroundColor: "var(--color-foreground)", zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
             value={entry}
@@ -89,7 +89,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
             initial="initial"
             animate="initial"
             whileHover="hovered"
-        variants={parentVariants}
+            // variants={parentVariants}
         >
             <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
 
@@ -100,15 +100,14 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     );
 }
 
-const parentVariants: Variants = {
-    initial: { backgroundColor: "var(--color-background)", color: "var(--color-foreground)", },
-    hovered: {},
-    dragged: { backgroundColor: "var(--color-foreground)", color: "var(--color-background)", zIndex: 50, }
-};
+// const parentVariants: Variants = {
+//     initial: { backgroundColor: "var(--color-background)", color: "var(--color-foreground)" },
+//     hovered: {}
+// };
 
 const rowActionsVariants: Variants = {
-    initial: { opacity: 0, scale: 0.75, x: -10, },
-    hovered: { opacity: 1, scale: 1, x: 0, }
+    initial: { opacity: 0, scale: 0.75, },
+    hovered: { opacity: 1, scale: 1, }
 };
 
 function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void; dragControls: DragControls; variants: Variants; }) {
@@ -136,7 +135,8 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
                 }}
                 title="Drag to reorder"
             >
-                <GripVertical className="size-3.5" />
+                {/* <GripVertical className="size-3.5" /> */}
+                <IconRadix_DragHandleDots2 className="size-3.5" />
             </div>
         </motion.div>
     );
@@ -145,7 +145,7 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
 function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void; }) {
     return (
         <Button
-            className={cn("absolute top-1.5 left-2 size-3.5 text-muted-foreground flex items-center justify-center cursor-pointer")}
+            className={classNames("absolute top-1.5 left-2 size-3.5 text-muted-foreground flex items-center justify-center cursor-pointer")}
             variant="ghost"
             size="icon"
             onClick={onToggle}
@@ -169,13 +169,12 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
 function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
     return (
         <Input
-            className={cn(
-                "pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none transition-all",
-                !inUse && "text-muted-foreground/40 line-through bg-muted/5"
-            )}
+            className={classNames(inputClasses, !inUse && "text-muted-foreground/40 line-through bg-muted/5")}
             value={path}
             onChange={(e) => onUpdate(e.target.value)}
             placeholder="Enter path..."
         />
     );
 }
+
+const inputClasses = "pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none transition-all";
