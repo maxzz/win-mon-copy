@@ -86,7 +86,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
             dragListener={false}
             dragControls={dragControls}
             whileDrag={{ scale: 1, zIndex: 50, }}
-            whileHover="hover"
+            //whileHover="hover"
         >
             <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
 
@@ -129,7 +129,8 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
 function RowActions({ onRemove, dragControls }: { onRemove: () => void; dragControls: DragControls }) {
     return (
         <motion.div
-            className="absolute top-0.5 right-4 flex items-center gap-1 px-0.5 pointer-events-none"
+            className="absolute top-0.5 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity 1pointer-events-none"
+            whileHover="hover"
             initial="initial"
             variants={{
                 initial: { opacity: 0, x: 10, pointerEvents: "none" },
