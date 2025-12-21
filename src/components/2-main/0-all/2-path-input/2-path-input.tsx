@@ -78,27 +78,71 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
 
 function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntry; onToggle: () => void; onUpdate: (path: string) => void; onRemove: () => void; }) {
     const dragControls = useDragControls();
-
     return (
         <Reorder.Item
             className="group relative h-7 select-none"
-            value={entry}
+            // whileHover="hover"
+            whileDrag={{ scale: 1, zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
-            whileDrag={{ scale: 1, zIndex: 50, }}
-            whileHover="hover"
+            value={entry}
         >
             <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
 
-            <Input
-                className={cn("pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none", !entry.inUse && "text-muted-foreground/40 line-through")}
-                value={entry.path}
-                onChange={(e) => onUpdate(e.target.value)}
-                placeholder="Enter path..."
-            />
+            <EntryInput inUse={entry.inUse} path={entry.path} onUpdate={onUpdate} />
 
             <RowActions onRemove={onRemove} dragControls={dragControls} />
         </Reorder.Item>
+    );
+}
+
+function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
+    return (
+        <Input
+            className={cn(
+                "pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none transition-all",
+                !inUse && "text-muted-foreground/40 line-through bg-muted/5"
+            )}
+            value={path}
+            onChange={(e) => onUpdate(e.target.value)}
+            placeholder="Enter path..."
+        />
+    );
+}
+
+function RowActions({ onRemove, dragControls }: { onRemove: () => void; dragControls: DragControls }) {
+    return (
+        <motion.div
+            className="absolute top-0.5 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+            whileHover="hover"
+            initial="initial"
+            variants={{
+                initial: { opacity: 0, scale: 0.5 },
+                hover: { opacity: 1, scale: 1 }
+            }}
+            transition={{ duration: 0.2, delay: 0.1, ease: "easeOut" }}
+        >
+            <Button
+                className="size-6 text-muted-foreground hover:text-destructive"
+                variant="ghost"
+                size="icon"
+                onClick={onRemove}
+                title="Remove path"
+            >
+                <Trash2 className="size-3" />
+            </Button>
+
+            <div
+                className="size-6 text-muted-foreground/50 hover:text-muted-foreground active:cursor-grabbing touch-none select-none cursor-grab flex items-center justify-center"
+                onPointerDown={(e) => {
+                    e.preventDefault();
+                    dragControls.start(e);
+                }}
+                title="Drag to reorder"
+            >
+                <GripVertical className="size-3.5" />
+            </div>
+        </motion.div>
     );
 }
 
@@ -123,41 +167,5 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
                 </motion.div>
             </AnimatePresence>
         </Button>
-    );
-}
-
-function RowActions({ onRemove, dragControls }: { onRemove: () => void; dragControls: DragControls }) {
-    return (
-        <motion.div
-            className="absolute top-0.5 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity 1pointer-events-none"
-            //whileHover="hover"
-            initial="initial"
-            variants={{
-                initial: { opacity: 0, scale: 0.5 },
-                hover: { opacity: 1, scale: 1 }
-            }}
-            transition={{ duration: 0.2, delay: 0.25, ease: "easeOut" }}
-        >
-            <Button
-                className="size-6 text-muted-foreground hover:text-destructive"
-                variant="ghost"
-                size="icon"
-                onClick={onRemove}
-                title="Remove path"
-            >
-                <Trash2 className="size-3" />
-            </Button>
-
-            <div
-                className="size-6 text-muted-foreground/50 hover:text-muted-foreground active:cursor-grabbing touch-none select-none cursor-grab flex items-center justify-center"
-                onPointerDown={(e) => {
-                    e.preventDefault();
-                    dragControls.start(e);
-                }}
-                title="Drag to reorder"
-            >
-                <GripVertical className="size-3.5" />
-            </div>
-        </motion.div>
     );
 }
