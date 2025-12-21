@@ -1,18 +1,12 @@
-import { Label } from "@/components/ui/shadcn/label";
-import { PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui/0-all";
+import { useEffect } from "react";
 import { cn } from "@/utils";
-import { PlusIcon, Eye, EyeOff, GripVertical, Trash2 } from "lucide-react";
 import { Reorder, useDragControls } from "motion/react";
 import { Button } from "@/components/ui/shadcn/button";
-import {
-    InputGroup,
-    InputGroupAddon,
-    InputGroupButton,
-    InputGroupInput,
-} from "@/components/ui/shadcn/input-group";
-
-import { useEffect } from "react";
+import { Label } from "@/components/ui/shadcn/label";
 import { Input } from "@/components/ui/shadcn/input";
+import { PlusIcon, GripVertical, Trash2 } from "lucide-react";
+import { IconEyeClosed, IconEyeOn } from "@/components/ui/icons/normal/radix-icons";
+import { PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui/0-all";
 
 export function PathInput({ label, value, onChange }: { label: string, value: readonly PathEntry[], onChange: (v: PathEntry[]) => void; }) {
 
@@ -87,30 +81,29 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
 
     return (
         <Reorder.Item
-            className="group relative select-none"
+            className="group relative h-7 select-none"
             value={entry}
             dragListener={false}
             dragControls={dragControls}
             whileDrag={{ scale: 1, zIndex: 50, }}
         >
             <Button
-                className={cn("absolute top-0 left-0 size-1 transition-colors", entry.inUse ? "text-primary" : "text-muted-foreground/30")}
+                className={cn("absolute top-1.5 left-2 size-4 text-muted-foreground flex items-center justify-center cursor-pointer")}
                 variant="ghost"
                 size="icon"
                 onClick={onToggle}
-                title={entry.inUse ? "Disable path" : "Enable path"}
             >
-                {entry.inUse ? <Eye className="size-1" /> : <EyeOff className="size-1" />}
+                {entry.inUse ? <IconEyeOn className="size-full!" /> : <IconEyeClosed className="size-full!" />}
             </Button>
 
             <Input
-                className={cn("px-8 py-1 h-full text-xs transition-all select-text", !entry.inUse && "text-muted-foreground/40 line-through")}
+                className={cn("pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none", !entry.inUse && "text-muted-foreground/40 line-through")}
                 value={entry.path}
                 onChange={(e) => onUpdate(e.target.value)}
                 placeholder="Enter path..."
             />
 
-            <div className="absolute top-0 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="absolute top-0.5 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button
                     className="size-6 text-muted-foreground hover:text-destructive"
                     variant="ghost"
