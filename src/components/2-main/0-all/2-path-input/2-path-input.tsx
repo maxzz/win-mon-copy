@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { cn } from "@/utils";
-import { Reorder, useDragControls, motion, AnimatePresence, type DragControls } from "motion/react";
+import { Reorder, useDragControls, motion, AnimatePresence, type DragControls, type Variants } from "motion/react";
 import { Button } from "@/components/ui/shadcn/button";
 import { Label } from "@/components/ui/shadcn/label";
 import { Input } from "@/components/ui/shadcn/input";
@@ -81,7 +81,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     return (
         <Reorder.Item
             className="group relative h-7 select-none"
-            // whileHover="hover"
+            whileHover="hover"
             whileDrag={{ scale: 1, zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
@@ -91,7 +91,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
 
             <EntryInput inUse={entry.inUse} path={entry.path} onUpdate={onUpdate} />
 
-            <RowActions onRemove={onRemove} dragControls={dragControls} />
+            <RowActions onRemove={onRemove} dragControls={dragControls} variants={rowActionsVariants} />
         </Reorder.Item>
     );
 }
@@ -110,16 +110,13 @@ function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; o
     );
 }
 
-function RowActions({ onRemove, dragControls }: { onRemove: () => void; dragControls: DragControls }) {
+function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void; dragControls: DragControls; variants: Variants; }) {
     return (
         <motion.div
             className="absolute top-0.5 right-4 flex items-center gap-1 px-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
-            whileHover="hover"
+            //whileHover="hover"
             initial="initial"
-            variants={{
-                initial: { opacity: 0, scale: 0.5 },
-                hover: { opacity: 1, scale: 1 }
-            }}
+            variants={variants}
             transition={{ duration: 0.2, delay: 0.1, ease: "easeOut" }}
         >
             <Button
@@ -169,3 +166,8 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
         </Button>
     );
 }
+
+const rowActionsVariants: Variants = {
+    initial: { opacity: 0, scale: 0.5 },
+    hover: { opacity: 1, scale: 1 }
+};
