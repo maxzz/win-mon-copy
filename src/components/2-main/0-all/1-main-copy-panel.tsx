@@ -1,15 +1,14 @@
+import { useEffect, useRef } from "react";
 import { useAtomValue } from "jotai";
-import { logsAtom } from "@/store/atoms-copy-files";
 import { useSnapshot } from "valtio";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
-import { Button } from "@/components/ui/shadcn/button";
-import { PathsConfigSection } from "./2-path-input/1-paths-config-section";
-import { SelectTm } from "@/components/ui/ui-local/4-select-tm";
 import { Label } from "@/components/ui/shadcn/label";
+import { Button } from "@/components/ui/shadcn/button";
+import { SelectTm } from "@/components/ui/ui-local/4-select-tm";
 import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
 import { R2MCalls } from "@/shared/2-gates-in-client-as-atoms/commands-to-main/1-calls-renderer-to-main";
-import { useEffect, useRef } from "react";
-import { cn } from "@/utils";
+import { logsAtom } from "@/store/atoms-copy-files";
+import { PathsConfigSection } from "./2-path-input/1-paths-config-section";
 
 export function MainCopyPanel() {
     const { userData } = useSnapshot(appSettings);

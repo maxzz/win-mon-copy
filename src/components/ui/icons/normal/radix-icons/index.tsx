@@ -17,3 +17,11 @@ export * from "./24-drag-handle-dots-1";
 export * from "./25-drag-handle-dots-2";
 export * from "./26-drag-handle-horizontal";
 export * from "./27-drag-handle-vertical";
+
+export * from "./30-folder-closed";
+export * from "./30-folder-open";
+export * from "./30-folder-sync";
+
+export * from "./61-eye-closed";
+export * from "./61-eye-off";
+export * from "./61-eye-on";
