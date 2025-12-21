@@ -81,15 +81,15 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     return (
         <Reorder.Item
             className="group relative h-7 select-none"
-            //whileDrag={{ scale: 1, zIndex: 50, }}
+            whileDrag={{ backgroundColor: "var(--color-foreground)", color: "var(--color-background)", zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
             value={entry}
-            
+
             initial="initial"
-            whileHover="hovered"
             animate="initial"
-            variants={parentVariants}
+            whileHover="hovered"
+        variants={parentVariants}
         >
             <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
 
@@ -101,23 +101,22 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
 }
 
 const parentVariants: Variants = {
-    initial: { },
-    hovered: { }
+    initial: { backgroundColor: "var(--color-background)", color: "var(--color-foreground)", },
+    hovered: {},
+    dragged: { backgroundColor: "var(--color-foreground)", color: "var(--color-background)", zIndex: 50, }
 };
 
 const rowActionsVariants: Variants = {
-    initial: { opacity: 0, scale: 0.5},
-    hovered: { opacity: 1, scale: 1 }
+    initial: { opacity: 0, scale: 0.75, x: -10, },
+    hovered: { opacity: 1, scale: 1, x: 0, }
 };
 
 function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void; dragControls: DragControls; variants: Variants; }) {
     return (
         <motion.div
-            className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1 1opacity-0 1group-hover:opacity-100 1transition-opacity"
-            // className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1"
-            // initial="initial"
+            className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1"
             variants={variants}
-            transition={{ duration: 1.52, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 0.2, delay: 0.1, ease: "easeOut" }}
         >
             <Button
                 className="size-6 text-muted-foreground hover:text-destructive"
