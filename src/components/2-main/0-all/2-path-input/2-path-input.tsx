@@ -172,7 +172,7 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
 function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
     return (
         <input
-            className={classNames(inputClasses0, inputClasses, !inUse && "text-muted-foreground/40 line-through bg-muted/5")}
+            className={classNames(input0Classes, inputClasses, !inUse && "text-muted-foreground/40 line-through bg-muted/5")}
             value={path}
             onChange={(e) => onUpdate(e.target.value)}
             placeholder="Enter path..."
@@ -181,7 +181,7 @@ function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; o
 }
 
 
-const inputClasses0 = "\
+const input0Classes = "\
 1px-3 \
 1py-1 \
 w-full \
