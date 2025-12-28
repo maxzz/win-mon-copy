@@ -1,17 +1,17 @@
 import { type ComponentPropsWithoutRef } from "react";
 import { classNames } from "@/utils";
-import { LogsPanel } from "./3-logs-panel";
+import { LogsPanel } from "./2-logs-panel";
 import { useSnapshot } from "valtio";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { AnimatePresence, motion } from "motion/react";
-import { PathInputGrid } from "./2-path-input/2-path-input-grid";
+import { PathInputGrid } from "./1-path-input-grid";
 
 export function Section2Main({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     return (
         <div className={classNames("px-4 flex flex-col overflow-hidden", className)} {...rest}>
             {/* <div className="grid grid-rows-[auto_1fr] gap-4 h-full"> */}
 
-                <PathsConfigSection className="py-4" />
+                <PathsConfigSection className="pt-4" />
 
                 {/* <div className="h-24">
                     <EntryInput inUse={true} path="test" onUpdate={(path) => { }} />
