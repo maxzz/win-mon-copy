@@ -22,11 +22,11 @@ export function MainCopyPanel() {
     return (
         <div className="grid grid-rows-[auto_1fr] gap-4 h-full">
 
-            <PathsConfigSection />
+            <PathsConfigSection className="py-4" />
 
-            <div className="h-24">
+            {/* <div className="h-24">
                 <EntryInput inUse={true} path="test" onUpdate={(path) => { }} />
-            </div>
+            </div> */}
 
             <div className="p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col">
                 <Label className="mb-2">
