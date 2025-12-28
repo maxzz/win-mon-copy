@@ -1,10 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useAtomValue } from "jotai";
+import { classNames } from "@/utils";
 import { logsAtom } from "@/store/atoms-copy-files";
 import { Label } from "@/components/ui/shadcn/label";
 import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
 
-export function LogsPanel() {
+export function LogsPanel({className}: {className?: string}) {
     const logs = useAtomValue(logsAtom);
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -16,8 +17,8 @@ export function LogsPanel() {
         }, [logs]
     );
 
-    return (
-        <div className="p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col">
+    return (<>
+        <div className={classNames("p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col", className)}>
             <Label className="mb-2">
                 Logs
             </Label>
@@ -30,5 +31,5 @@ export function LogsPanel() {
                 <div ref={scrollRef} />
             </ScrollArea>
         </div>
-    );
+        </>);
 }

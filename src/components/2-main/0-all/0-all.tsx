@@ -8,8 +8,8 @@ import { PathInputGrid } from "./2-path-input/2-path-input-grid";
 
 export function Section2Main({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     return (
-        <div className={classNames("px-4 grid overflow-hidden", className)} {...rest}>
-            <div className="grid grid-rows-[auto_1fr] gap-4 h-full">
+        <div className={classNames("px-4 flex flex-col overflow-hidden", className)} {...rest}>
+            {/* <div className="grid grid-rows-[auto_1fr] gap-4 h-full"> */}
 
                 <PathsConfigSection className="py-4" />
 
@@ -17,8 +17,8 @@ export function Section2Main({ className, ...rest }: ComponentPropsWithoutRef<"d
                     <EntryInput inUse={true} path="test" onUpdate={(path) => { }} />
                 </div> */}
 
-                <LogsPanel />
-            </div>
+                <LogsPanel className="flex-1 my-4" />
+            {/* </div> */}
 
         </div>
     );
