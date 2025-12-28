@@ -36,7 +36,7 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
     };
 
     return (
-        <div className="p-2 border rounded-md bg-muted/50 overflow-hidden  flex flex-col gap-2">
+        <div className="p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col gap-2">
             <div className="flex items-center justify-between">
                 <Label>
                     {label}
@@ -47,10 +47,10 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
             </div>
 
             <Reorder.Group
-                className="max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-border flex flex-col"
+                className="1max-h-48 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-border flex flex-col gap-4"
                 axis="y"
                 layoutScroll
-                style={{ overflowY: "scroll" }}
+                // style={{ overflowY: "scroll" }}
                 values={value as PathEntry[]}
                 onReorder={onChange}
             >
@@ -80,7 +80,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     const dragControls = useDragControls();
     return (
         <Reorder.Item
-            className="group relative h-7 select-none"
+            className="group relative 1h-7 select-none"
             // whileDrag={{ backgroundColor: "var(--color-foreground)", zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
@@ -171,8 +171,8 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
 
 function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
     return (
-        <Input
-            className={classNames(inputClasses, !inUse && "text-muted-foreground/40 line-through bg-muted/5")}
+        <input
+            className={classNames(inputClasses0, inputClasses, !inUse && "text-muted-foreground/40 line-through bg-muted/5")}
             value={path}
             onChange={(e) => onUpdate(e.target.value)}
             placeholder="Enter path..."
@@ -180,4 +180,39 @@ function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; o
     );
 }
 
-const inputClasses = "pl-8 pr-24 pb-0.5 h-full text-xs rounded-none shadow-none transition-all";
+
+const inputClasses0 = "\
+1px-3 \
+1py-1 \
+w-full \
+h-9 \
+text-sm \
+md:text-sm \
+border-input \
+bg-transparent \
+placeholder:text-muted-foreground \
+\
+1focus-visible:outline-none \
+1focus-visible:ring-1 \
+1focus-visible:ring-ring \
+disabled:cursor-not-allowed \
+disabled:opacity-50 \
+\
+1border \
+rounded-md \
+1shadow-sm \
+1transition-colors \
+flex \
+";
+
+const inputClasses = "pl-8 pr-24 pb-0.5 h-full text-xs \
+rounded-none shadow-none transition-all \
+\
+focus:outline \
+focus:-outline-offset-4 \
+focus:outline-sky-500 \
+\
+focus:text-sky-500! \
+focus-visible:outline-2! \
+\
+";

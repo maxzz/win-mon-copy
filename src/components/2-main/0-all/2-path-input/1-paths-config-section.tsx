@@ -7,8 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 export function PathsConfigSection({ className, ...rest }: React.ComponentProps<"div">) {
     const { userData, appUi } = useSnapshot(appSettings);
     const activeProfile = userData.activeProfileId;
-    // Handle potential missing profile during migration or deletion
-    const paths = userData.sourcePathProfiles?.[activeProfile] || [];
+    const paths = userData.sourcePathProfiles?.[activeProfile] || []; // Handle potential missing profile during migration or deletion
 
     return (
         <AnimatePresence initial={false}>
