@@ -1,5 +1,7 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
+import { useSnapshot } from "valtio";
 import { classNames } from "@/utils";
+import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { Reorder, useDragControls, motion, AnimatePresence, type DragControls, type Variants } from "motion/react";
 import { Button } from "@/components/ui/shadcn/button";
 import { Label } from "@/components/ui/shadcn/label";
@@ -8,38 +10,49 @@ import { PlusIcon, Trash2 } from "lucide-react";
 import { IconEyeClosed, IconEyeOn, IconRadix_DragHandleDots2 } from "@/components/ui/icons/normal/radix-icons";
 import { PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui/0-all";
 
-export function PathInput({ label, value, onChange }: { label: string, value: readonly PathEntry[], onChange: (v: PathEntry[]) => void; }) {
+export function PathInputGrid() {
+    const { userData } = useSnapshot(appSettings);
+    const activeProfile = userData.activeProfileId;
+    const paths = userData.sourcePathProfiles?.[activeProfile] || []; // Handle potential missing profile during migration or deletion
+
+    const onChange = useCallback(
+        (v: PathEntry[]) => {
+            if (appSettings.userData.sourcePathProfiles?.[activeProfile]) {
+                appSettings.userData.sourcePathProfiles[activeProfile] = v;
+            }
+        }, [activeProfile]
+    );
 
     useEffect(
         () => {
-            const needsIds = value.some(e => !e.id);
+            const needsIds = paths.some(e => !e.id);
             if (needsIds) {
-                onChange(value.map(e => e.id ? e : { ...e, id: crypto.randomUUID() }));
+                onChange(paths.map(e => e.id ? e : { ...e, id: crypto.randomUUID() }));
             }
-        }, [value, onChange]
+        }, [paths, onChange]
     );
 
     const toggleInUse = (id: string) => {
-        onChange(value.map(e => e.id === id ? { ...e, inUse: !e.inUse } : e));
+        onChange(paths.map(e => e.id === id ? { ...e, inUse: !e.inUse } : e));
     };
 
     const updatePath = (id: string, path: string) => {
-        onChange(value.map(e => e.id === id ? { ...e, path } : e));
+        onChange(paths.map(e => e.id === id ? { ...e, path } : e));
     };
 
     const removePath = (id: string) => {
-        onChange(value.filter(e => e.id !== id));
+        onChange(paths.filter(e => e.id !== id));
     };
 
     const addPath = () => {
-        onChange([...value, { id: crypto.randomUUID(), path: '', inUse: true }]);
+        onChange([...paths, { id: crypto.randomUUID(), path: '', inUse: true }]);
     };
 
     return (
         <div className="p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col gap-2">
             <div className="flex items-center justify-between">
                 <Label>
-                    {label}
+                    {`Profile: ${activeProfile}`}
                 </Label>
                 <Button className="size-6" variant="outline" size="icon" onClick={addPath}>
                     <PlusIcon className="size-4" />
@@ -51,10 +64,10 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
                 axis="y"
                 layoutScroll
                 // style={{ overflowY: "scroll" }}
-                values={value as PathEntry[]}
+                values={paths as PathEntry[]}
                 onReorder={onChange}
             >
-                {value.map(
+                {paths.map(
                     (entry) => (
                         <PathEntryRow
                             entry={entry}
@@ -66,7 +79,7 @@ export function PathInput({ label, value, onChange }: { label: string, value: re
                     )
                 )}
 
-                {value.length === 0 && (
+                {paths.length === 0 && (
                     <div className="text-[10px] text-muted-foreground/50 italic py-4 text-center border border-dashed rounded-md cursor-pointer hover:bg-muted/30 transition-colors" onClick={addPath}>
                         Click to add paths
                     </div>
@@ -80,7 +93,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     const dragControls = useDragControls();
     return (
         <Reorder.Item
-            className="group relative 1h-7 select-none"
+            className="group relative h-7 select-none"
             // whileDrag={{ backgroundColor: "var(--color-foreground)", zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
@@ -89,16 +102,21 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
             initial="initial"
             animate="initial"
             whileHover="hovered"
-            // variants={parentVariants}
+        // variants={parentVariants}
         >
             <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
 
-            <EntryInput inUse={entry.inUse} path={entry.path} onUpdate={onUpdate} />
+            <input
+                className={classNames(input0Classes, inputClasses, !entry.inUse && "text-muted-foreground/40 line-through bg-muted/5")}
+                value={entry.path}
+                onChange={(e) => onUpdate(e.target.value)}
+                placeholder="Enter path..."
+            />
 
             <RowActions onRemove={onRemove} dragControls={dragControls} variants={rowActionsVariants} />
         </Reorder.Item>
     );
-}
+};
 
 // const parentVariants: Variants = {
 //     initial: { backgroundColor: "var(--color-background)", color: "var(--color-foreground)" },
@@ -169,23 +187,12 @@ function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () =>
     );
 }
 
-function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
-    return (
-        <input
-            className={classNames(input0Classes, inputClasses, !inUse && "text-muted-foreground/40 line-through bg-muted/5")}
-            value={path}
-            onChange={(e) => onUpdate(e.target.value)}
-            placeholder="Enter path..."
-        />
-    );
-}
-
 
 const input0Classes = "\
 1px-3 \
 1py-1 \
 w-full \
-h-9 \
+1h-9 \
 text-sm \
 md:text-sm \
 border-input \
@@ -205,8 +212,12 @@ rounded-md \
 flex \
 ";
 
-const inputClasses = "pl-8 pr-24 pb-0.5 h-full text-xs \
-rounded-none shadow-none transition-all \
+const inputClasses = "\
+pl-8 pr-24 pb-0.5 \
+1h-full text-xs \
+rounded-none \
+shadow-none \
+transition-all \
 \
 focus:outline \
 focus:-outline-offset-4 \
