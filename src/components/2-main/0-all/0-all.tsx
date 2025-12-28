@@ -1,8 +1,10 @@
 import { type ComponentPropsWithoutRef } from "react";
 import { classNames } from "@/utils";
-import { MainCopyPanel } from "./1-main-copy-panel";
 import { LogsPanel } from "./3-logs-panel";
-import { PathsConfigSection } from "./2-path-input/1-paths-config-section";
+import { useSnapshot } from "valtio";
+import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
+import { AnimatePresence, motion } from "motion/react";
+import { PathInputGrid } from "./2-path-input/2-path-input-grid";
 
 export function Section2Main({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     return (
@@ -20,7 +22,26 @@ export function Section2Main({ className, ...rest }: ComponentPropsWithoutRef<"d
 
         </div>
     );
-} 
+}
+
+function PathsConfigSection({ className }: { className?: string; }) {
+    const { appUi } = useSnapshot(appSettings);
+    return (
+        <AnimatePresence initial={false}>
+            {appUi.showFilePanels && (
+                <motion.div
+                    initial={{ height: 0, opacity: 0, overflow: 'hidden' }}
+                    animate={{ height: 'auto', opacity: 1, overflow: 'visible' }}
+                    exit={{ height: 0, opacity: 0, overflow: 'hidden' }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    className={className}
+                >
+                    <PathInputGrid />
+                </motion.div>
+            )}
+        </AnimatePresence>
+    );
+}
 
 // function EntryInput({ inUse, path, onUpdate }: { inUse: boolean; path: string; onUpdate: (path: string) => void; }) {
 //     return (
