@@ -6,6 +6,9 @@ import { AnimatePresence, motion } from "motion/react";
 
 export function PathsConfigSection({ className, ...rest }: React.ComponentProps<"div">) {
     const { userData, appUi } = useSnapshot(appSettings);
+    const activeProfile = userData.activeProfileId;
+    // Handle potential missing profile during migration or deletion
+    const paths = userData.sourcePathProfiles?.[activeProfile] || [];
 
     return (
         <AnimatePresence initial={false}>
@@ -16,16 +19,15 @@ export function PathsConfigSection({ className, ...rest }: React.ComponentProps<
                     exit={{ height: 0, opacity: 0, overflow: 'hidden' }}
                     transition={{ duration: 0.2, ease: "easeInOut" }}
                 >
-                    <div className={cn("grid grid-rows-2 gap-4", className)} {...rest}>
+                    <div className={cn("grid gap-4", className)} {...rest}>
                         <PathInput
-                            label="Debug Source Paths (one per line)"
-                            value={userData.sourcePathsDebug}
-                            onChange={(v) => appSettings.userData.sourcePathsDebug = v}
-                        />
-                        <PathInput
-                            label="Release Source Paths (one per line)"
-                            value={userData.sourcePathsRelease}
-                            onChange={(v) => appSettings.userData.sourcePathsRelease = v}
+                            label={`${activeProfile} Source Paths (one per line)`}
+                            value={paths}
+                            onChange={(v) => {
+                                if (appSettings.userData.sourcePathProfiles && appSettings.userData.sourcePathProfiles[activeProfile]) {
+                                    appSettings.userData.sourcePathProfiles[activeProfile] = v;
+                                }
+                            }}
                         />
                     </div>
                 </motion.div>
@@ -33,4 +35,3 @@ export function PathsConfigSection({ className, ...rest }: React.ComponentProps<
         </AnimatePresence>
     );
 }
-

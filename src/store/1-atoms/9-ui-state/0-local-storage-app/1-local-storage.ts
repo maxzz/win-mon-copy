@@ -41,6 +41,31 @@ function loadUiInitialState(): AppUi {
     }
 
     const state = mergeDefaultAndLoaded({ defaults: initialAppUi, loaded: storageUi });
+
+    // Migration v0 -> v1 (sourcePathsDebug/Release -> sourcePathProfiles)
+    const userDataAny = state.userData as any;
+    if (Array.isArray(userDataAny.sourcePathsDebug) || Array.isArray(userDataAny.sourcePathsRelease)) {
+        if (!state.userData.sourcePathProfiles) {
+            state.userData.sourcePathProfiles = { ...defaultUserData.sourcePathProfiles };
+        }
+        
+        if (Array.isArray(userDataAny.sourcePathsDebug) && userDataAny.sourcePathsDebug.length > 0) {
+            state.userData.sourcePathProfiles['Debug'] = [...userDataAny.sourcePathsDebug];
+        }
+        if (Array.isArray(userDataAny.sourcePathsRelease) && userDataAny.sourcePathsRelease.length > 0) {
+            state.userData.sourcePathProfiles['Release'] = [...userDataAny.sourcePathsRelease];
+        }
+
+        if (typeof userDataAny.isDebug === 'boolean') {
+            state.userData.activeProfileId = userDataAny.isDebug ? 'Debug' : 'Release';
+        }
+        
+        // Cleanup old keys
+        delete userDataAny.sourcePathsDebug;
+        delete userDataAny.sourcePathsRelease;
+        delete userDataAny.isDebug;
+    }
+
     return state;
 }
 

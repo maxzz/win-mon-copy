@@ -15,9 +15,8 @@ export type PathEntry = {
 };
 
 export type UserData = {
-    sourcePathsDebug: PathEntry[];
-    sourcePathsRelease: PathEntry[];
-    isDebug: boolean;
+    sourcePathProfiles: Record<string, PathEntry[]>;
+    activeProfileId: string;
 };
 
 export const defaultAppUISettings: AppUISettings = {
@@ -28,7 +27,9 @@ export const defaultAppUISettings: AppUISettings = {
 };
 
 export const defaultUserData: UserData = {
-    sourcePathsDebug: [],
-    sourcePathsRelease: [],
-    isDebug: true,
+    sourcePathProfiles: {
+        'Debug': [],
+        'Release': [],
+    },
+    activeProfileId: 'Debug',
 };

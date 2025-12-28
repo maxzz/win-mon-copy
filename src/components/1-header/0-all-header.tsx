@@ -6,6 +6,8 @@ import { TopMenu } from "./4-top-menu";
 import { ButtonQuickToggleThemeMode } from "./3-button-theme-toggle";
 import { ButtonToggleFilePanels } from "./1-button-file-panels-toggle";
 
+import { ProfileSelector } from "./4-top-menu/5-profile-selector";
+
 export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     return (
         <div className={classNames("pl-4 pr-2 py-2 border-b border-border shadow-xs", className)} {...rest}>
@@ -19,6 +21,7 @@ export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<
                 </div>
 
                 <div className="flex items-center gap-1">
+                    <ProfileSelector />
                     {/* Add here single button to quick toggle dark/light theme without system mode */}
                     <ButtonToggleFilePanels />
                     <PopoverSettings />

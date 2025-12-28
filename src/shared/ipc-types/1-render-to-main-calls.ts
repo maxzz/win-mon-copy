@@ -25,7 +25,7 @@ export namespace R2M { // Main from Renderer
 
     export type CopyFiles = {
         type: 'r2m:copy-files';
-        mode: 'debug' | 'release';
+        mode: string;
         sourcePaths: string[];
     };
 

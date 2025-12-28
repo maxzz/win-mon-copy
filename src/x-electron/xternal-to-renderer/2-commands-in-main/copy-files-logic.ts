@@ -57,7 +57,7 @@ async function killDpAgent() {
     }
 }
 
-export async function copyFilesLogic(mode: 'debug' | 'release', sourcePaths: string[]) {
+export async function copyFilesLogic(mode: string, sourcePaths: string[]) {
     log(`Starting copy in ${mode} mode...`);
     
     let bIsWin32 = false;

@@ -115,6 +115,9 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
         <motion.div
             className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1"
             variants={variants}
+            onHoverEnd={() => {
+                console.log("hover end");
+            }}
             transition={{ duration: 0.2, delay: 0.1, ease: "easeOut" }}
         >
             <Button
