@@ -53,7 +53,7 @@ export const copyFilesAtom = atom(
 
         const pathEntries = userData.profiles[activeProfile];
         if (!pathEntries || pathEntries.length === 0) {
-            set(addLogAtom, `No path entries to copy`);
+            set(addLogAtom, "There are no paths to copy.");
             return;
         }
 
@@ -70,5 +70,12 @@ export const addLogAtom = atom(
     null,
     (get, set, text: string) => {
         set(logsAtom, (prev) => [...prev, text]);
+    }
+);
+
+export const clearLogsAtom = atom(
+    null,
+    (get, set) => {
+        set(logsAtom, []);
     }
 );
