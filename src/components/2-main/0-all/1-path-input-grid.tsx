@@ -93,7 +93,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     const dragControls = useDragControls();
     return (
         <Reorder.Item
-            className="group relative h-7 select-none flex items-center gap-2 odd:bg-amber-500 even:bg-amber-400"
+            className="group relative mx-2 h-7 select-none flex items-center gap-2 odd:bg-amber-500 even:bg-amber-400"
             // whileDrag={{ backgroundColor: "var(--color-foreground)", zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
@@ -107,7 +107,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
             <EyeToggle inUse={entry.inUse} onToggle={onToggle} />
 
             <input
-                className={classNames(input0Classes, inputClasses, !entry.inUse && "text-muted-foreground/40 line-through bg-muted/5")}
+                className={classNames(input0Classes, input0HoverClasses, !entry.inUse && "text-muted-foreground/40 line-through bg-muted/5")}
                 value={entry.path}
                 onChange={(e) => onUpdate(e.target.value)}
                 placeholder="Enter path..."
@@ -187,45 +187,26 @@ function EyeToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void; 
     );
 }
 
-
 const input0Classes = "\
-1px-3 \
-1py-1 \
-w-full \
-1h-9 \
-text-sm \
-md:text-sm \
-border-input \
-bg-transparent \
+pl-8 pr-24 pb-0.5 \
+size-full \
+text-xs \
 placeholder:text-muted-foreground \
-\
-1focus-visible:outline-none \
-1focus-visible:ring-1 \
-1focus-visible:ring-ring \
 disabled:cursor-not-allowed \
 disabled:opacity-50 \
 \
-group-hover:bg-red-500/50 \
-\
-1border \
-rounded-md \
-1shadow-sm \
-1transition-colors \
-flex \
-";
+rounded-none shadow-none transition-all";
 
-const inputClasses = "\
-pl-8 pr-24 pb-0.5 \
-1h-full text-xs \
-rounded-none \
-shadow-none \
-transition-all \
+const input0HoverClasses = "\
+\
+group-hover:bg-red-500/50 \
+group-hover:not-focus:bg-green-500/50 \
+not-focus:cursor-pointer \
 \
 focus:outline \
-focus:-outline-offset-4 \
+focus:-outline-offset-2 \
 focus:outline-sky-500 \
 \
 focus:text-sky-500! \
 focus-visible:outline-2! \
-\
 ";
