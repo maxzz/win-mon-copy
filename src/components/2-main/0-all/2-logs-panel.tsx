@@ -10,14 +10,11 @@ import { Trash2 } from "lucide-react";
 export function LogsPanel({ className }: { className?: string; }) {
     const logs = useAtomValue(logsAtom);
     const clearLogs = useSetAtom(doClearLogsAtom);
-    
-    const scrollRef = useRef<HTMLDivElement>(null);
 
+    const scrollRef = useRef<HTMLDivElement>(null);
     useEffect(
         () => {
-            if (scrollRef.current) {
-                scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }
+            scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }, [logs]
     );
 
@@ -28,7 +25,7 @@ export function LogsPanel({ className }: { className?: string; }) {
                     <span>
                         Logs ({logs.length})
                     </span>
-                    <Button className="hover:text-red-700" variant="outline" size="icon-xs" title="Clear logs" onClick={() => clearLogs()}>
+                    <Button className="not-disabled:hover:text-red-700" variant="outline" size="icon-xs" title="Clear logs" disabled={logs.length === 0} onClick={clearLogs}>
                         <Trash2 />
                     </Button>
                 </div>
@@ -49,6 +46,7 @@ export function LogsPanel({ className }: { className?: string; }) {
                         )
                     )}
                 </div>
+                
                 <div ref={scrollRef} />
             </ScrollArea>
         </div>

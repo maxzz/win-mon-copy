@@ -4,8 +4,8 @@ import { scrollbarClasses, scrollbarThumbClasses } from '../../2-main/8-shared-s
 
 export function ScrollBox({ children }: { children: ReactNode; }) {
     return (
-        <ScrollArea.Root className="w-full h-full" type="always">
-            <ScrollArea.Viewport className="pb-4 w-full h-full min-h-0">
+        <ScrollArea.Root className="size-full" type="always">
+            <ScrollArea.Viewport className="pb-4 size-full min-h-0">
                 {children}
             </ScrollArea.Viewport>
 
