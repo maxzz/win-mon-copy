@@ -93,7 +93,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     const dragControls = useDragControls();
     return (
         <Reorder.Item
-            className="group relative mx-2 h-7 select-none flex items-center gap-2 odd:bg-amber-500 even:bg-amber-400"
+            className="group relative h-7 select-none flex items-center gap-2"
             // whileDrag={{ backgroundColor: "var(--color-foreground)", zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
@@ -200,13 +200,15 @@ rounded-none shadow-none transition-all";
 const input0HoverClasses = "\
 \
 group-hover:bg-red-500/50 \
-group-hover:not-focus:bg-green-500/50 \
+group-hover:not-focus:bg-muted \
 not-focus:cursor-pointer \
 \
-focus:outline \
-focus:-outline-offset-2 \
-focus:outline-sky-500 \
+focus:bg-background \
+focus:outline-1 \
+focus:-outline-offset-1 \
+focus:outline-foreground/50 \
 \
 focus:text-sky-500! \
-focus-visible:outline-2! \
+focus-visible:outline! \
+rounded! \
 ";
