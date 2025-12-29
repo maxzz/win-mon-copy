@@ -60,7 +60,7 @@ export function PathInputGrid() {
             </div>
 
             <Reorder.Group
-                className="1max-h-48 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-border flex flex-col gap-4"
+                className="1max-h-48 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-border flex flex-col"
                 axis="y"
                 layoutScroll
                 // style={{ overflowY: "scroll" }}
@@ -93,7 +93,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
     const dragControls = useDragControls();
     return (
         <Reorder.Item
-            className="group relative h-7 select-none"
+            className="group relative h-7 select-none flex items-center gap-2 odd:bg-amber-500 even:bg-amber-400"
             // whileDrag={{ backgroundColor: "var(--color-foreground)", zIndex: 50, }}
             dragListener={false}
             dragControls={dragControls}
@@ -104,7 +104,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
             whileHover="hovered"
         // variants={parentVariants}
         >
-            <VisibilityToggle inUse={entry.inUse} onToggle={onToggle} />
+            <EyeToggle inUse={entry.inUse} onToggle={onToggle} />
 
             <input
                 className={classNames(input0Classes, inputClasses, !entry.inUse && "text-muted-foreground/40 line-through bg-muted/5")}
@@ -163,7 +163,7 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
     );
 }
 
-function VisibilityToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void; }) {
+function EyeToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void; }) {
     return (
         <Button
             className={classNames("absolute top-1.5 left-2 size-3.5 text-muted-foreground flex items-center justify-center cursor-pointer")}
@@ -204,6 +204,8 @@ placeholder:text-muted-foreground \
 1focus-visible:ring-ring \
 disabled:cursor-not-allowed \
 disabled:opacity-50 \
+\
+group-hover:bg-red-500/50 \
 \
 1border \
 rounded-md \
