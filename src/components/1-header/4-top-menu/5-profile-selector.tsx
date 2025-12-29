@@ -1,5 +1,5 @@
 import { useSnapshot } from 'valtio';
-import { useAtom, useSetAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { Plus, Trash2 } from 'lucide-react';
 import { appSettings } from '@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage';
 import { Button } from '@/components/ui/shadcn/button';
@@ -16,12 +16,7 @@ export function ProfileSelector() {
 
     const setIsAddOpen = useSetAtom(isAddProfileOpenAtom);
     const setIsDeleteOpen = useSetAtom(isDeleteProfileOpenAtom);
-
     const copyFiles = useSetAtom(copyFilesAtom);
-
-    const handleCopy = () => {
-        copyFiles();
-    };
 
     return (
         <div className="flex items-center gap-1">
@@ -50,7 +45,7 @@ export function ProfileSelector() {
 
             <DialogDeleteProfile activeProfile={activeProfile} />
 
-            <Button size="sm" onClick={handleCopy} className="h-7 text-xs ml-2">Copy Files</Button>
+            <Button size="sm" onClick={copyFiles} className="h-7 text-xs ml-2">Copy Files</Button>
         </div>
     );
 }

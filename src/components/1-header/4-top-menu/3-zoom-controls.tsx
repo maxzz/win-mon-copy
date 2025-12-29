@@ -10,15 +10,12 @@ export function ZoomControls() {
     const zoomPercent = Math.round((1.2 ** zoomLevel) * 100);
 
     return (
-        <DropdownMenuItem 
-            className="justify-between focus:bg-transparent cursor-default" 
-            onSelect={(e) => e.preventDefault()}
-        >
+        <DropdownMenuItem className="focus:bg-transparent cursor-default justify-between" onSelect={(e) => e.preventDefault()}>
             <DropdownMenuLabel className="p-0 pl-2 text-xs font-normal">
                 Zoom
             </DropdownMenuLabel>
 
-            <div className="flex items-center gap-1 border rounded-md p-0.5">
+            <div className="p-0.5 border rounded-md flex items-center">
                 <Button
                     className="size-6 rounded-sm" variant="ghost" size="icon"
                     onClick={(e) => { e.preventDefault(); e.stopPropagation(); zoomAction('out'); }}
@@ -27,7 +24,9 @@ export function ZoomControls() {
                     <IconZoomMinus className="size-3" />
                 </Button>
 
-                <span className="w-10 text-center text-xs tabular-nums">{zoomPercent}%</span>
+                <span className="w-10 text-center text-xs tabular-nums">
+                    {zoomPercent}%
+                </span>
 
                 <Button
                     className="size-6 rounded-sm" variant="ghost" size="icon"
