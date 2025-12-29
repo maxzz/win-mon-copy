@@ -13,12 +13,12 @@ import { PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui/0-all";
 export function PathInputGrid() {
     const { userData } = useSnapshot(appSettings);
     const activeProfile = userData.activeProfileId;
-    const paths = userData.sourcePathProfiles?.[activeProfile] || []; // Handle potential missing profile during migration or deletion
+    const paths = userData.profiles?.[activeProfile] || []; // Handle potential missing profile during migration or deletion
 
     const onChange = useCallback(
         (v: PathEntry[]) => {
-            if (appSettings.userData.sourcePathProfiles?.[activeProfile]) {
-                appSettings.userData.sourcePathProfiles[activeProfile] = v;
+            if (appSettings.userData.profiles?.[activeProfile]) {
+                appSettings.userData.profiles[activeProfile] = v;
             }
         }, [activeProfile]
     );

@@ -1,7 +1,70 @@
 import { atom } from 'jotai';
+import { R2MCalls } from '@/shared/2-gates-in-client-as-atoms/commands-to-main/1-calls-renderer-to-main';
+import { appSettings } from './1-atoms/9-ui-state/0-local-storage-app/1-local-storage';
+
+// UI State Atoms for Profile Dialogs
+export const isAddProfileOpenAtom = atom(false);
+export const isDeleteProfileOpenAtom = atom(false);
+
+// Profile Actions
+
+export const addProfileAtom = atom(
+    null,
+    (get, set, newProfileName: string): boolean => {
+        const { userData } = appSettings;
+
+        if (newProfileName && !userData.profiles[newProfileName]) {
+            appSettings.userData.profiles[newProfileName] = [];
+            appSettings.userData.activeProfileId = newProfileName;
+            return true;
+        }
+        return false;
+    }
+);
+
+export const deleteProfileAtom = atom(
+    null,
+    (get, set): boolean => {
+        const { userData } = appSettings;
+        const activeProfile = userData.activeProfileId;
+        if (!activeProfile) {
+            return false;
+        }
+
+        const profilesKeys = Object.keys(userData.profiles);
+
+        if (profilesKeys.length > 1) {
+            const newProfiles = profilesKeys.filter(p => p !== activeProfile);
+            delete appSettings.userData.profiles[activeProfile];
+            appSettings.userData.activeProfileId = newProfiles[0];
+            return true;
+        }
+        return false;
+    }
+);
+
+// Actions
+
+export const copyFilesAtom = atom(
+    null,
+    (get, set) => {
+        const { userData } = appSettings;
+        const activeProfile = userData.activeProfileId;
+
+        const pathEntries = userData.profiles[activeProfile];
+        if (!pathEntries || pathEntries.length === 0) {
+            set(addLogAtom, `No path entries to copy`);
+            return;
+        }
+
+        const sourcePaths = pathEntries.filter(p => p.inUse).map(p => p.path);
+        R2MCalls.copyFiles({ mode: activeProfile, sourcePaths });
+    }
+);
+
+// Logs
 
 export const logsAtom = atom<string[]>([]);
-
 
 export const addLogAtom = atom(
     null,
@@ -9,4 +72,3 @@ export const addLogAtom = atom(
         set(logsAtom, (prev) => [...prev, text]);
     }
 );
-
