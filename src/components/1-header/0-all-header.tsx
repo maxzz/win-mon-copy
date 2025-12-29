@@ -1,14 +1,17 @@
 import { type ComponentPropsWithoutRef } from "react";
+import { useSetAtom } from "jotai";
 import { classNames } from "@/utils";
 import { IconMicroscope } from "../ui/icons/normal";
 import { PopoverSettings } from "../4-dialogs/7-settings-dialog";
+import { Button } from "../ui/shadcn";
 import { TopMenu } from "./4-top-menu";
-import { ButtonQuickToggleThemeMode } from "./3-button-theme-toggle";
-import { ButtonToggleFilePanels } from "./1-button-file-panels-toggle";
-
-import { ProfileSelector } from "./4-top-menu/5-profile-selector";
+import { copyFilesAtom } from "@/store/atoms-copy-files";
+import { ButtonShowProfileItems } from "./1-btn-show-profile-items";
+import { ProfileSelector } from "./2-profile-selector";
+import { ButtonQuickToggleThemeMode } from "./3-btn-theme-toggle";
 
 export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
+    const copyFiles = useSetAtom(copyFilesAtom);
     return (
         <div className={classNames("pl-4 pr-2 py-2 border-b border-border shadow-xs", className)} {...rest}>
 
@@ -21,9 +24,13 @@ export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<
                 </div>
 
                 <div className="flex items-center gap-1">
-                    <ButtonToggleFilePanels />
+                    <ButtonShowProfileItems />
                     <ProfileSelector />
-                    {/* Add here single button to quick toggle dark/light theme without system mode */}
+
+                    <Button size="sm" onClick={copyFiles} className="h-7 text-xs ml-2">
+                        Copy Files
+                    </Button>
+
                     <PopoverSettings />
                     <ButtonQuickToggleThemeMode />
                     <TopMenu />
