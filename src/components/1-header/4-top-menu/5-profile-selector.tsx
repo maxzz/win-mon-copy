@@ -29,19 +29,19 @@ export function ProfileSelector() {
                 asPopover
             />
 
-            <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => setIsAddOpen(true)} title="Add Profile">
+            {/* <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => setIsAddOpen(true)} title="Add Profile">
                 <Plus className="h-4 w-4" />
-            </Button>
+            </Button> */}
 
             <DialogAddProfile />
 
-            <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive hover:text-destructive"
+            {/* <Button size="icon" variant="ghost" className="h-7 w-7 text-destructive hover:text-destructive"
                 onClick={() => setIsDeleteOpen(true)}
                 disabled={profiles.length <= 1}
                 title="Delete Profile"
             >
                 <Trash2 className="h-4 w-4" />
-            </Button>
+            </Button> */}
 
             <DialogDeleteProfile activeProfile={activeProfile} />
 

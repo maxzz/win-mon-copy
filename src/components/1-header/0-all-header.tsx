@@ -21,9 +21,9 @@ export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<
                 </div>
 
                 <div className="flex items-center gap-1">
+                    <ButtonToggleFilePanels />
                     <ProfileSelector />
                     {/* Add here single button to quick toggle dark/light theme without system mode */}
-                    <ButtonToggleFilePanels />
                     <PopoverSettings />
                     <ButtonQuickToggleThemeMode />
                     <TopMenu />
