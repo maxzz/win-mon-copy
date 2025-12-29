@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/shadcn/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/shadcn/dialog';
 import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
-import { addProfileAtom, isAddProfileOpenAtom } from '@/store/atoms-copy-files';
+import { doAddProfileAtom, isDlgAddProfileOpenAtom } from '@/store/atoms-copy-files';
 
 export function DialogAddProfile() {
-    const [isAddOpen, setIsAddOpen] = useAtom(isAddProfileOpenAtom);
-    const addProfile = useSetAtom(addProfileAtom);
+    const [isAddOpen, setIsAddOpen] = useAtom(isDlgAddProfileOpenAtom);
+    const addProfile = useSetAtom(doAddProfileAtom);
     const [newProfileName, setNewProfileName] = useState('');
 
     const handleAdd = () => {

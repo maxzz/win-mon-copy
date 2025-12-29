@@ -1,12 +1,12 @@
 import { useAtom, useSetAtom } from 'jotai';
+import { doDeleteProfileAtom, isDlgDeleteProfileOpenAtom } from '@/store/atoms-copy-files';
 import { Button } from '@/components/ui/shadcn/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/shadcn/dialog';
-import { deleteProfileAtom, isDeleteProfileOpenAtom } from '@/store/atoms-copy-files';
 
 export function DialogDeleteProfile({ activeProfile }: { activeProfile: string; }) {
-    const [isDeleteOpen, setIsDeleteOpen] = useAtom(isDeleteProfileOpenAtom);
+    const [isDeleteOpen, setIsDeleteOpen] = useAtom(isDlgDeleteProfileOpenAtom);
 
-    const deleteProfile = useSetAtom(deleteProfileAtom);
+    const deleteProfile = useSetAtom(doDeleteProfileAtom);
 
     const handleDelete = () => {
         if (deleteProfile()) {

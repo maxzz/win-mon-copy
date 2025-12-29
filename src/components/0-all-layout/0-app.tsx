@@ -1,12 +1,13 @@
-import { UISymbolDefs } from "../ui";
-import { OnAppMount, WorldToReactListener } from "../../shared/2-gates-in-client-as-atoms";
+import { useSnapshot } from "valtio";
+import { UISymbolDefs } from "@/components/ui";
+import { OnAppMount, WorldToReactListener } from "@/shared/2-gates-in-client-as-atoms";
+import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { Section1Header } from "../1-header";
 import { Section2Main } from "../2-main";
 import { Section3_Footer } from "../3-footer";
-import { DialogDeleteProfile } from "../2-main/4-dialogs/7-dialog-delete-profile";
-import { DialogAddProfile } from "../2-main/4-dialogs/6-dialog-add-profile";
-import { useSnapshot } from "valtio";
-import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
+import { DialogAddProfile } from "../2-main/4-dialogs/1-dialog-add-profile";
+import { DialogDeleteProfile } from "../2-main/4-dialogs/2-dialog-delete-profile";
+import { DialogAbout } from "../2-main/4-dialogs/3-dialog-about";
 
 export function App() {
     return (<>
@@ -35,5 +36,6 @@ function Dialogs() {
     return (<>
         <DialogAddProfile />
         <DialogDeleteProfile activeProfile={activeProfile} />
+        <DialogAbout />
     </>);
 }

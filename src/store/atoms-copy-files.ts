@@ -3,12 +3,13 @@ import { R2MCalls } from '@/shared/2-gates-in-client-as-atoms/commands-to-main/1
 import { appSettings } from './1-atoms/9-ui-state/0-local-storage-app/1-local-storage';
 
 // UI State Atoms for Profile Dialogs
-export const isAddProfileOpenAtom = atom(false);
-export const isDeleteProfileOpenAtom = atom(false);
+export const isDlgAddProfileOpenAtom = atom(false);
+export const isDlgDeleteProfileOpenAtom = atom(false);
+export const isDlgAboutOpenAtom = atom(false);
 
 // Profile Actions
 
-export const addProfileAtom = atom(
+export const doAddProfileAtom = atom(
     null,
     (get, set, newProfileName: string): boolean => {
         const { userData } = appSettings;
@@ -22,7 +23,7 @@ export const addProfileAtom = atom(
     }
 );
 
-export const deleteProfileAtom = atom(
+export const doDeleteProfileAtom = atom(
     null,
     (get, set): boolean => {
         const { userData } = appSettings;
@@ -45,7 +46,7 @@ export const deleteProfileAtom = atom(
 
 // Actions
 
-export const copyFilesAtom = atom(
+export const doCopyFilesAtom = atom(
     null,
     (get, set) => {
         const { userData } = appSettings;
@@ -53,7 +54,7 @@ export const copyFilesAtom = atom(
 
         const pathEntries = userData.profiles[activeProfile];
         if (!pathEntries || pathEntries.length === 0) {
-            set(addLogAtom, "There are no paths to copy.");
+            set(doAddLogStringAtom, "There are no paths to copy.");
             return;
         }
 
@@ -66,14 +67,14 @@ export const copyFilesAtom = atom(
 
 export const logsAtom = atom<string[]>([]);
 
-export const addLogAtom = atom(
+export const doAddLogStringAtom = atom(
     null,
     (get, set, text: string) => {
         set(logsAtom, (prev) => [...prev, text]);
     }
 );
 
-export const clearLogsAtom = atom(
+export const doClearLogsAtom = atom(
     null,
     (get, set) => {
         set(logsAtom, []);

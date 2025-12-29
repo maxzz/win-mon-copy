@@ -5,13 +5,13 @@ import { IconMicroscope } from "../ui/icons/normal";
 import { PopoverSettings } from "../4-dialogs/7-settings-dialog";
 import { Button } from "../ui/shadcn";
 import { TopMenu } from "./4-top-menu";
-import { copyFilesAtom } from "@/store/atoms-copy-files";
+import { doCopyFilesAtom } from "@/store/atoms-copy-files";
 import { ButtonShowProfileItems } from "./1-btn-show-profile-items";
 import { ProfileSelector } from "./2-profile-selector";
 import { ButtonQuickToggleThemeMode } from "./3-btn-theme-toggle";
 
 export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
-    const copyFiles = useSetAtom(copyFilesAtom);
+    const copyFiles = useSetAtom(doCopyFilesAtom);
     return (
         <div className={classNames("pl-4 pr-2 py-2 border-b border-border shadow-xs", className)} {...rest}>
 

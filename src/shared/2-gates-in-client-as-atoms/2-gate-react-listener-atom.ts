@@ -2,7 +2,7 @@ import { M2R } from "@/shared/ipc-types";
 import { atom } from "jotai";
 import { filesContentAtom } from "../../store/atom-dropped-files";
 import { zoomLevelAtom } from "../../store/1-atoms/atom-zoom";
-import { addLogAtom } from "@/store/atoms-copy-files";
+import { doAddLogStringAtom } from "@/store/atoms-copy-files";
 
 export const doFromMainAtom = atom(
     null,
@@ -21,7 +21,7 @@ export const doFromMainAtom = atom(
                 break;
             }
             case 'm2r:log-update': {
-                set(addLogAtom, data.text);
+                set(doAddLogStringAtom, data.text);
                 break;
             }
             case 'm2r:zoom-changed': {
