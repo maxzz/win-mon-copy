@@ -100,7 +100,7 @@ function DialogContent({
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
-            className="\
+            className={cn("\
             ring-offset-background \
             focus:ring-ring \
             data-[state=open]:bg-accent \
@@ -108,7 +108,7 @@ function DialogContent({
             absolute \
             top-2 \
             right-2 \
-            p-2 hover:text-white hover:bg-red-500 active:scale-[.97]
+            p-2 hover:text-white hover:bg-red-500 active:scale-[.97] \
             rounded-sm \
             opacity-70 \
             transition-opacity \
@@ -120,7 +120,7 @@ function DialogContent({
             [&_svg]:pointer-events-none \
             [&_svg]:shrink-0 \
             [&_svg:not([class*='size-'])]:size-4 \
-            "
+            ")}
             tabIndex={-1}
           >
             <XIcon />
