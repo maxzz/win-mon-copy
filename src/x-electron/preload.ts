@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent, webUtils } from "electron";
+//import { statSync } from "fs";
 
 // Custom APIs for renderer
 const api: TmApi = {
@@ -18,13 +19,16 @@ const api: TmApi = {
         ipcRenderer.on(channel, callback);
     },
 
-    getPathForFile(file: File): string {
+    getPathForFile: async (file: File): Promise<GetFilePathResult> => { //TODO: maybe make it as a regular invoke call for array of files to avoid load fs module?
         try {
-            return webUtils.getPathForFile(file);
+            const filePath = webUtils.getPathForFile(file);
+            const res = await ipcRenderer.invoke('invoke-main', { type: 'r2mi:check-path-type', path: filePath });
+            return { filePath, isDirectory: res.isDirectory, error: res.error };
         } catch (error) {
-            console.error(error); // no a file case
+            console.error(error); // no such file case
+            const msg = error instanceof Error ? error.message : `${error}`;
+            return { filePath: '', isDirectory: false, error: msg };
         }
-        return '';
     },
 };
 

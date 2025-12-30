@@ -19,11 +19,17 @@ export namespace R2MInvoke { // Main from Renderer invoke and get result
         type: 'r2mi:get-zoom-level';
     };
 
+    export type CheckPathType = {
+        type: 'r2mi:check-path-type';
+        path: string;
+    };
+
     export type AllInvokes =
         | DoLoadfiles
         | DoLoadfiles2
         | GetConfig
         | GetZoomLevel
+        | CheckPathType
         ;
 
     export type InvokeResult<T extends R2MInvoke.AllInvokes> =
@@ -42,6 +48,9 @@ export namespace R2MInvoke { // Main from Renderer invoke and get result
 
         : T extends GetZoomLevel             //'r2mi:get-zoom-level'
         ? number
+
+        : T extends CheckPathType
+        ? { isDirectory: boolean; error?: string; }
 
         : never;
 
