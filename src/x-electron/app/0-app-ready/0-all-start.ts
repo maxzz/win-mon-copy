@@ -5,6 +5,10 @@ import { setAppListeners } from '../1-start-main-window/3-2-listeners-of-app';
 import { createTray } from '../1-start-main-window/4-tray';
 import { createAppMenu } from '../1-start-main-window/5-app-menu';
 
+if (!app.isPackaged) {
+    app.commandLine.appendSwitch('remote-debugging-port', '9222');
+}
+
 app.whenReady().then(() => {
     connect_ListenersForCallFromRenderer();
 
