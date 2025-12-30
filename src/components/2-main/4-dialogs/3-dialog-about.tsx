@@ -12,7 +12,7 @@ export function DialogAbout() {
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="px-4 py-3 w-auto sm:max-w-[400px] text-xs">
                 <DialogHeader>
-                    <DialogTitle className="text-sm">About</DialogTitle>
+                    <DialogTitle className="ml-0.5 text-sm">About</DialogTitle>
                 </DialogHeader>
 
                 <div className="grid grid-cols-[auto_1fr] gap-2">
@@ -21,12 +21,11 @@ export function DialogAbout() {
                         <IconBinocular className="p-1 size-12 border-sky-500 border rounded shadow" />
                     </div>
 
-                    <div className="space-y-1 text-xs">
-                        <p className="font-semibold">Trace Viewer</p>
-                        <p>Digital Persona, Inc.</p>
+                    <div className="my-2 text-xs">
+                        <p className="mb-1 font-semibold">Copy Files Monitor</p>
                         <p>Version: {envBuildVersion()}</p>
-                        <p>Build Date: {envModifiedDate()}</p>
-                        <p className="mt-2 text-[.5rem] text-muted-foreground">All Rights Reserved. Copyright (c) 2003-2022</p>
+                        <p>Build Date: <span className="mt-2 text-[.6rem]">{envModifiedDate()}</span></p>
+                        
                     </div>
                 </div>
 

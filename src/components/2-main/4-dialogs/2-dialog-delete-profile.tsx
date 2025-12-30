@@ -16,19 +16,19 @@ export function DialogDeleteProfile({ activeProfile }: { activeProfile: string; 
 
     return (
         <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-            <DialogContent>
+            <DialogContent className="w-auto sm:max-w-[400px]">
                 <DialogHeader>
                     <DialogTitle>
                         Delete Profile
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="pt-2 py-3">
                         Are you sure you want to delete profile "{activeProfile}"?
                     </DialogDescription>
                 </DialogHeader>
 
                 <DialogFooter>
-                    <Button variant="outline" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
-                    <Button variant="destructive" onClick={handleDelete}>Delete</Button>
+                    <Button variant="outline" size="sm" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
+                    <Button variant="destructive" size="sm" onClick={handleDelete}>Delete</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

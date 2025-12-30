@@ -20,30 +20,30 @@ export function DialogAddProfile() {
 
     return (
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-            <DialogContent>
+            <DialogContent className="w-auto sm:max-w-[400px]">
                 <DialogHeader>
                     <DialogTitle>
                         Add New Profile
                     </DialogTitle>
                 </DialogHeader>
 
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">Name</Label>
-                        <Input
-                            id="name"
-                            value={newProfileName}
-                            onChange={e => setNewProfileName(e.target.value)}
-                            className="col-span-3"
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') handleAdd();
-                            }}
-                        />
-                    </div>
+                <div className="py-4 grid grid-cols-4 items-center gap-4">
+                    <Label className="text-right" htmlFor="name">
+                        Name
+                    </Label>
+                    <Input
+                        className="col-span-3"
+                        id="name"
+                        value={newProfileName}
+                        onChange={e => setNewProfileName(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleAdd();
+                        }}
+                    />
                 </div>
 
                 <DialogFooter>
-                    <Button onClick={handleAdd}>Add</Button>
+                    <Button onClick={handleAdd} size="sm">Add</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
