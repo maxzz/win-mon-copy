@@ -45,6 +45,10 @@ export function exitApp(): void {
     sendToMain({ type: 'r2m:exit-app' });
 }
 
+export function toggleDevTools(): void {
+    sendToMain({ type: 'r2m:toggle-dev-tools' });
+}
+
 export function getZoomLevel(): Promise<number> {
     return invokeMainTyped({ type: 'r2mi:get-zoom-level' });
 }

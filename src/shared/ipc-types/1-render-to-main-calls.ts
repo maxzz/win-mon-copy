@@ -46,7 +46,11 @@ export namespace R2M { // Main from Renderer
         type: 'r2m:exit-app';
     };
 
-    export type ToMainCalls = NotifyMessage | DarkMode | SetClientOptions | CancelDetection | ZoomAction | ExitApp | CopyFiles | SaveConfig;
+    export type ToggleDevTools = {
+        type: 'r2m:toggle-dev-tools';
+    };
+
+    export type ToMainCalls = NotifyMessage | DarkMode | SetClientOptions | CancelDetection | ZoomAction | ExitApp | ToggleDevTools | CopyFiles | SaveConfig;
 }
 
 export namespace R2MParams {
@@ -56,6 +60,7 @@ export namespace R2MParams {
     export type CancelDetection = Omit<R2M.CancelDetection, 'type'>;
     export type ZoomAction = Omit<R2M.ZoomAction, 'type'>;
     export type ExitApp = Omit<R2M.ExitApp, 'type'>;
+    export type ToggleDevTools = Omit<R2M.ToggleDevTools, 'type'>;
     export type CopyFiles = Omit<R2M.CopyFiles, 'type'>;
     export type SaveConfig = Omit<R2M.SaveConfig, 'type'>;
 }

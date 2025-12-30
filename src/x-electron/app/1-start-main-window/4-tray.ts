@@ -24,7 +24,7 @@ export function createTray() {
     const tray = new Tray(img);
 
     // Set the context menu for the tray icon
-    tray.setToolTip('Win-Mon');
+    tray.setToolTip('Win-Mon-Copy');
     //tray.setContextMenu(contextMenu);
 
     tray.setContextMenu(createContextMenu());

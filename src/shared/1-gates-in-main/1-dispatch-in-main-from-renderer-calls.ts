@@ -50,6 +50,13 @@ export async function callFromRendererInMain(data: R2M.ToMainCalls): Promise<voi
             app.quit();
             break;
         }
+        case 'r2m:toggle-dev-tools': {
+            const w = appWindow.wnd;
+            if (w) {
+                w.webContents.toggleDevTools();
+            }
+            break;
+        }
         default: {
             const really: never = data;
             throw new Error(`\nUnknown IPC-call: ${JSON.stringify(really)}\n`);
