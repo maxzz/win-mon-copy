@@ -16,7 +16,7 @@ export function DialogDeleteProfile({ activeProfile }: { activeProfile: string; 
 
     return (
         <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-            <DialogContent className="w-auto sm:max-w-[400px]">
+            <DialogContent className="w-auto sm:max-w-[400px]" modal>
                 <DialogHeader>
                     <DialogTitle>
                         Delete Profile
@@ -34,4 +34,3 @@ export function DialogDeleteProfile({ activeProfile }: { activeProfile: string; 
         </Dialog>
     );
 }
-

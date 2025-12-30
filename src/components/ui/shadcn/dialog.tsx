@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react" //12.30.25
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"
 
@@ -53,13 +53,18 @@ function DialogOverlay({
   )
 }
 
+const preventClose = (e: Event) => e.preventDefault();
+
 function DialogContent({
   className,
   children,
   showCloseButton = true,
+  onPointerDownOutside,
+  modal = false,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
-  showCloseButton?: boolean
+  showCloseButton?: boolean;
+  modal?: boolean;
 }) {
   return (
     <DialogPortal data-slot="dialog-portal">
@@ -94,6 +99,7 @@ function DialogContent({
           dark:shadow-foreground/30",
           className
         )}
+        onPointerDownOutside={modal ? preventClose : onPointerDownOutside}
         {...props}
       >
         {children}

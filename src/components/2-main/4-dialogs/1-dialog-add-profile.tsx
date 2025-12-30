@@ -20,7 +20,7 @@ export function DialogAddProfile() {
 
     return (
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-            <DialogContent className="w-auto sm:max-w-[400px]">
+            <DialogContent className="w-auto sm:max-w-[400px]" modal>
                 <DialogHeader>
                     <DialogTitle>
                         Add New Profile
@@ -35,7 +35,7 @@ export function DialogAddProfile() {
                         className="col-span-3"
                         id="name"
                         value={newProfileName}
-                        onChange={e => setNewProfileName(e.target.value)}
+                        onChange={e => setNewProfileName(e.target.value.trim())}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter') handleAdd();
                         }}
@@ -43,7 +43,9 @@ export function DialogAddProfile() {
                 </div>
 
                 <DialogFooter>
-                    <Button onClick={handleAdd} size="sm">Add</Button>
+                    <Button onClick={handleAdd} disabled={!newProfileName.trim()} size="sm">
+                        Add
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
