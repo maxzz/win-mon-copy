@@ -26,10 +26,6 @@ export async function callFromRendererInMain(data: R2M.ToMainCalls): Promise<voi
             copyFilesLogic(data.mode, data.sourcePaths);
             break;
         }
-        case 'r2m:save-config': {
-            // TODO: implement save config
-            break;
-        }
         case 'r2m:zoom-action': {
             const w = appWindow.wnd;
             if (w) {

@@ -29,14 +29,6 @@ export namespace R2M { // Main from Renderer
         sourcePaths: string[];
     };
 
-    export type SaveConfig = {
-        type: 'r2m:save-config';
-        config: {
-            sourcePathsDebug: { path: string; inUse: boolean; }[];
-            sourcePathsRelease: { path: string; inUse: boolean; }[];
-        };
-    };
-
     export type ZoomAction = {
         type: 'r2m:zoom-action';
         action: 'in' | 'out' | 'reset';
@@ -50,19 +42,18 @@ export namespace R2M { // Main from Renderer
         type: 'r2m:toggle-dev-tools';
     };
 
-    export type ToMainCalls = NotifyMessage | DarkMode | SetClientOptions | CancelDetection | ZoomAction | ExitApp | ToggleDevTools | CopyFiles | SaveConfig;
+    export type ToMainCalls = NotifyMessage | DarkMode | SetClientOptions | CancelDetection | ZoomAction | ExitApp | ToggleDevTools | CopyFiles;
 }
 
 export namespace R2MParams {
-    export type NotifyMessage = Omit<R2M.NotifyMessage, 'type'>;
-    export type DarkMode = Omit<R2M.DarkMode, 'type'>;
-    export type SetNapiOptions = Omit<R2M.SetClientOptions, 'type'>;
-    export type CancelDetection = Omit<R2M.CancelDetection, 'type'>;
-    export type ZoomAction = Omit<R2M.ZoomAction, 'type'>;
-    export type ExitApp = Omit<R2M.ExitApp, 'type'>;
-    export type ToggleDevTools = Omit<R2M.ToggleDevTools, 'type'>;
-    export type CopyFiles = Omit<R2M.CopyFiles, 'type'>;
-    export type SaveConfig = Omit<R2M.SaveConfig, 'type'>;
+    export type NotifyMessage = Omit<R2M.NotifyMessage, 'type'>;            // 'r2m:notify'
+    export type DarkMode = Omit<R2M.DarkMode, 'type'>;                      // 'r2m:dark-mode'
+    export type SetNapiOptions = Omit<R2M.SetClientOptions, 'type'>;        // 'r2m:set-client-options'
+    export type CancelDetection = Omit<R2M.CancelDetection, 'type'>;        // 'r2m:cancel-detection'
+    export type CopyFiles = Omit<R2M.CopyFiles, 'type'>;                    // 'r2m:copy-files'
+    export type ZoomAction = Omit<R2M.ZoomAction, 'type'>;                  // 'r2m:zoom-action'
+    export type ExitApp = Omit<R2M.ExitApp, 'type'>;                        // 'r2m:exit-app'
+    export type ToggleDevTools = Omit<R2M.ToggleDevTools, 'type'>;          // 'r2m:toggle-dev-tools'
 }
 
 // Size, position, and bounds

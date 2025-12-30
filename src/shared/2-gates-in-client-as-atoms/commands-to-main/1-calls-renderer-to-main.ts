@@ -17,7 +17,4 @@ export namespace R2MCalls {
         sendToMain({ type: 'r2m:copy-files', ...params });
     }
 
-    export function saveConfig(params: R2MParams.SaveConfig): void {
-        sendToMain({ type: 'r2m:save-config', ...params });
-    }
 }
