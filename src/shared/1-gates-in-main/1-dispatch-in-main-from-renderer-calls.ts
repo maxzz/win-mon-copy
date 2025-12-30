@@ -1,8 +1,8 @@
 import { Notification, app } from "electron";
 import { type R2M } from "@/shared/ipc-types";
-import { electronState } from "../../x-electron/app/2-electron-globals";
 import { appWindow } from "../../x-electron/app/1-start-main-window/7-app-window-instance";
 import { copyFilesLogic } from "../../x-electron/xternal-to-renderer/2-commands-in-main";
+//import { electronState } from "../../x-electron/app/2-electron-globals"; This is not needed so far or anymore.
 
 export async function callFromRendererInMain(data: R2M.ToMainCalls): Promise<void> {
     switch (data.type) {
@@ -18,7 +18,7 @@ export async function callFromRendererInMain(data: R2M.ToMainCalls): Promise<voi
             // electronState.maxControls = data.state.maxControls;
             break;
         }
-        case 'r2m:cancel-detection': {
+        case 'r2m:cancel-detection': {323
             // electronState.cancelDetection = true;
             break;
         }

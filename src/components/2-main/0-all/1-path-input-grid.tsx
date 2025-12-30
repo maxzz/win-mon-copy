@@ -133,9 +133,9 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
         <motion.div
             className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1"
             variants={variants}
-            onHoverEnd={() => {
-                console.log("hover end");
-            }}
+            // onHoverEnd={() => {
+            //     console.log("hover end");
+            // }}
             transition={{ duration: 0.2, delay: 0.1, ease: "easeOut" }}
         >
             <Button
@@ -143,6 +143,7 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
                 variant="ghost"
                 size="icon"
                 onClick={onRemove}
+                tabIndex={-1}
                 title="Remove path"
             >
                 <Trash2 className="size-3" />
@@ -166,10 +167,11 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
 function EyeToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void; }) {
     return (
         <Button
-            className={classNames("absolute top-1.5 left-2 size-3.5 text-muted-foreground flex items-center justify-center cursor-pointer")}
+            className={classNames("absolute top-1.5 left-2 size-3.5 rounded-none text-muted-foreground flex items-center justify-center cursor-pointer")}
             variant="ghost"
             size="icon"
             onClick={onToggle}
+            tabIndex={-1}
         >
             <AnimatePresence mode="popLayout" initial={false}>
                 <motion.div
@@ -180,7 +182,10 @@ function EyeToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void; 
                     transition={{ duration: 0.15, ease: "easeInOut" }}
                     className="size-full flex items-center justify-center"
                 >
-                    {inUse ? <IconEyeOn className="size-full!" /> : <IconEyeClosed className="size-full!" />}
+                    {inUse
+                        ? <IconEyeOn className="size-full!" />
+                        : <IconEyeClosed className="size-full!" />
+                    }
                 </motion.div>
             </AnimatePresence>
         </Button>
@@ -208,7 +213,7 @@ focus:outline-1 \
 focus:-outline-offset-1 \
 focus:outline-foreground/50 \
 \
-focus:text-sky-500! \
+focus:text-sky-700! \
 focus-visible:outline! \
 rounded! \
 ";
