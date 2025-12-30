@@ -10,14 +10,16 @@ import { DialogDeleteProfile } from "../2-main/4-dialogs/2-dialog-delete-profile
 import { DialogAbout } from "../2-main/4-dialogs/3-dialog-about";
 import { DropItDoc } from "../ui/ui-local/6-dnd/ui-drop-it-doc";
 import { doSetFilesFrom_Dnd_Atom } from "../ui/ui-local/6-dnd/8-atoms";
+import { Toaster } from "../ui/shadcn/sonner";
 
 export function App() {
     return (<>
         <UISymbolDefs />
-        <AppLayout />
         <WorldToReactListener />
         <OnAppMount />
+        <AppLayout />
         <DropItDoc doSetFilesFromDropAtom={doSetFilesFrom_Dnd_Atom} />
+        <Toaster />
     </>);
 }
 

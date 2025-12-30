@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { notice } from "../7-toaster";
 
 export type DoSetFilesFrom_Dnd_Atom = typeof doSetFilesFrom_Dnd_Atom;
 
@@ -22,13 +23,17 @@ export const doSetFilesFrom_Dnd_Atom = atom(                    // used by DropI
             }
         }
 
-        if (files.length) {
-            const filePaths = await Promise.all(files.map(async file => {
-                const res = await tmApi.getPathForFile(file);
-                console.log('file path', res);
-                return res.filePath;
-            }));
-            console.log('dropped files', filePaths.join(',\n'));
+        if (!files.length) {
+            return;
         }
+
+        const filePaths = await Promise.all(files.map(async file => {
+            const res = await tmApi.getPathForFile(file);
+            console.log('file path', res);
+            return res.filePath;
+        }));
+
+        notice.info('dropped files' + filePaths.join(',\n'));
+        console.log('dropped files', filePaths.join(',\n'));
     }
 ); 

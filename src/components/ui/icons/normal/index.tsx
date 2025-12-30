@@ -6,8 +6,9 @@ export * from './02-binocular';
 export * from './03-stop';
 export * from './04-target';
 export * from './05-target2';
-
 export * from './27-dnd-target';
+export * from './27-stop-circle';
+
 export * from './28-settings';
 export * from './29-1-zoom-minus';
 export * from './29-2-zoom-plus';
