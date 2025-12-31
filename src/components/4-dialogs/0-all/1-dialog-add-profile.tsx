@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
 import { Button } from '@/components/ui/shadcn/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/shadcn/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/shadcn/dialog';
 import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
 import { doAddProfileAtom, isDlgAddProfileOpenAtom } from '@/store/atoms-copy-files';
@@ -23,11 +23,14 @@ export function DialogAddProfile() {
             <DialogContent className="w-auto sm:max-w-[400px]" modal>
                 <DialogHeader>
                     <DialogTitle>
-                        Add New Profile
+                        New Profile
                     </DialogTitle>
+                    <DialogDescription>
+                        Enter the name of the new profile.
+                    </DialogDescription>
                 </DialogHeader>
 
-                <div className="py-4 grid grid-cols-4 items-center gap-4">
+                <div className="pb-2 pt-2 grid grid-cols-4 items-center gap-4">
                     <Label className="text-right" htmlFor="name">
                         Name
                     </Label>

@@ -5,9 +5,9 @@ import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-lo
 import { Section1Header } from "../1-header";
 import { Section2Main } from "../2-main";
 import { Section3_Footer } from "../3-footer";
-import { DialogAddProfile } from "../2-main/4-dialogs/1-dialog-add-profile";
-import { DialogDeleteProfile } from "../2-main/4-dialogs/2-dialog-delete-profile";
-import { DialogAbout } from "../2-main/4-dialogs/3-dialog-about";
+import { DialogAddProfile } from "../4-dialogs/0-all/1-dialog-add-profile";
+import { DialogDeleteProfile } from "../4-dialogs/0-all/2-dialog-delete-profile";
+import { DialogAbout } from "../4-dialogs/0-all/3-dialog-about";
 import { DropItDoc } from "../ui/ui-local/6-dnd/ui-drop-it-doc";
 import { doSetFilesFrom_Dnd_Atom } from "../ui/ui-local/6-dnd/8-atoms";
 import { Toaster } from "../ui/shadcn/sonner";
