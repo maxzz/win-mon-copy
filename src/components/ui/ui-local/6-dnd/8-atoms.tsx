@@ -1,6 +1,7 @@
 import { atom } from "jotai";
 import { notice } from "../7-toaster";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
+import { type PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui";
 
 export type DoSetFilesFrom_Dnd_Atom = typeof doSetFilesFrom_Dnd_Atom;
 
@@ -37,20 +38,27 @@ export const doSetFilesFrom_Dnd_Atom = atom(                    // used by DropI
         const activeElement = document.activeElement;
         const rowPathInputId = activeElement instanceof HTMLInputElement && activeElement.dataset['rowPathInput'];
 
-        if (filePaths.length === 1) {
-            const items = appSettings.userData.profiles?.[appSettings.userData.activeProfileId] || [];
+        const items = appSettings.userData.profiles?.[appSettings.userData.activeProfileId] || [];
 
+        if (filePaths.length === 1) {
             if (rowPathInputId) {
                 const item = items.find(i => i.id === rowPathInputId);
                 if (item) {
                     item.path = filePaths[0];
+                } else {
+                    items.push(makeNewItem(filePaths[0]));
                 }
             } else {
-                items.push({ id: crypto.randomUUID(), path: filePaths[0], inUse: true });
+                items.push(makeNewItem(filePaths[0]));
             }
         } else {
-            notice.info('dropped files' + filePaths.join(',\n'));
-            console.log('dropped files', filePaths.join(',\n'));
+            items.push(...filePaths.map(path => makeNewItem(path)));
         }
     }
-); 
+);
+
+function makeNewItem(path: string): PathEntry {
+    return { id: crypto.randomUUID(), path, inUse: true };
+}
+
+//TODO: check for duplicates
