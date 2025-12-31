@@ -110,6 +110,7 @@ function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntr
                 className={classNames(input0Classes, input0HoverClasses, !entry.inUse && "text-muted-foreground/40 line-through bg-muted/5")}
                 value={entry.path}
                 onChange={(e) => onUpdate(e.target.value)}
+                data-row-path-input="path-row-input"
                 placeholder="Enter path..."
             />
 

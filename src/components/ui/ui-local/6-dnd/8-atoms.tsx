@@ -33,7 +33,16 @@ export const doSetFilesFrom_Dnd_Atom = atom(                    // used by DropI
             return res.filePath;
         }));
 
-        notice.info('dropped files' + filePaths.join(',\n'));
-        console.log('dropped files', filePaths.join(',\n'));
+        const activeElement = document.activeElement;
+
+        if (activeElement instanceof HTMLInputElement && activeElement.dataset['rowPathInput'] === 'path-row-input') {
+            if (filePaths.length === 1) {
+                activeElement.value = filePaths[0];
+                activeElement.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        } else {
+            notice.info('dropped files' + filePaths.join(',\n'));
+            console.log('dropped files', filePaths.join(',\n'));
+        }
     }
 ); 
