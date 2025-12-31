@@ -37,15 +37,16 @@ export const doSetFilesFrom_Dnd_Atom = atom(                    // used by DropI
         const activeElement = document.activeElement;
         const rowPathInputId = activeElement instanceof HTMLInputElement && activeElement.dataset['rowPathInput'];
 
-        if (rowPathInputId) {
+        if (filePaths.length === 1) {
             const items = appSettings.userData.profiles?.[appSettings.userData.activeProfileId] || [];
 
-            if (filePaths.length === 1) {
+            if (rowPathInputId) {
                 const item = items.find(i => i.id === rowPathInputId);
                 if (item) {
                     item.path = filePaths[0];
-
                 }
+            } else {
+                items.push({ id: crypto.randomUUID(), path: filePaths[0], inUse: true });
             }
         } else {
             notice.info('dropped files' + filePaths.join(',\n'));
