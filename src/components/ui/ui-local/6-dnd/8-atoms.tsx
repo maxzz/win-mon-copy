@@ -1,5 +1,6 @@
 import { atom } from "jotai";
 import { notice } from "../7-toaster";
+import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 
 export type DoSetFilesFrom_Dnd_Atom = typeof doSetFilesFrom_Dnd_Atom;
 
@@ -34,11 +35,17 @@ export const doSetFilesFrom_Dnd_Atom = atom(                    // used by DropI
         }));
 
         const activeElement = document.activeElement;
+        const rowPathInputId = activeElement instanceof HTMLInputElement && activeElement.dataset['rowPathInput'];
 
-        if (activeElement instanceof HTMLInputElement && activeElement.dataset['rowPathInput'] === 'path-row-input') {
+        if (rowPathInputId) {
+            const items = appSettings.userData.profiles?.[appSettings.userData.activeProfileId] || [];
+
             if (filePaths.length === 1) {
-                activeElement.value = filePaths[0];
-                activeElement.dispatchEvent(new Event('change', { bubbles: true }));
+                const item = items.find(i => i.id === rowPathInputId);
+                if (item) {
+                    item.path = filePaths[0];
+
+                }
             }
         } else {
             notice.info('dropped files' + filePaths.join(',\n'));
