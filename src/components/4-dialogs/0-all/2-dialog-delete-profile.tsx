@@ -2,17 +2,19 @@ import { useAtom, useSetAtom } from 'jotai';
 import { doDeleteProfileAtom, isDlgDeleteProfileOpenAtom } from '@/store/atoms-copy-files';
 import { Button } from '@/components/ui/shadcn/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '@/components/ui/shadcn/dialog';
+import { notice } from '@/components/ui/ui-local/7-toaster';
 
 export function DialogDeleteProfile({ activeProfile }: { activeProfile: string; }) {
     const [isDeleteOpen, setIsDeleteOpen] = useAtom(isDlgDeleteProfileOpenAtom);
-
     const deleteProfile = useSetAtom(doDeleteProfileAtom);
 
-    const handleDelete = () => {
-        if (deleteProfile()) {
-            setIsDeleteOpen(false);
+    function handleDelete() {
+        if (!deleteProfile()) {
+            notice.error('Failed to delete profile.');
+            return;
         }
-    };
+        setIsDeleteOpen(false);
+    }
 
     return (
         <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
@@ -28,7 +30,7 @@ export function DialogDeleteProfile({ activeProfile }: { activeProfile: string; 
 
                 <DialogFooter>
                     <Button variant="outline" size="sm" onClick={() => setIsDeleteOpen(false)}>Cancel</Button>
-                    <Button variant="destructive" size="sm" onClick={handleDelete}>Delete</Button>
+                    <Button className="text-white dark:text-black" variant="destructive" size="sm" onClick={handleDelete}>Delete</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

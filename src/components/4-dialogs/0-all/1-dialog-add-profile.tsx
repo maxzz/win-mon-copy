@@ -5,18 +5,25 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogD
 import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
 import { doAddProfileAtom, isDlgAddProfileOpenAtom } from '@/store/atoms-copy-files';
+import { notice } from '@/components/ui/ui-local/7-toaster';
 
 export function DialogAddProfile() {
     const [isAddOpen, setIsAddOpen] = useAtom(isDlgAddProfileOpenAtom);
-    const addProfile = useSetAtom(doAddProfileAtom);
     const [newProfileName, setNewProfileName] = useState('');
+    const addProfile = useSetAtom(doAddProfileAtom);
 
-    const handleAdd = () => {
-        if (addProfile(newProfileName)) {
-            setIsAddOpen(false);
-            setNewProfileName('');
+    function handleAdd() {
+        if (!newProfileName.trim()) {
+            notice.error('Profile name cannot be empty.');
+            return;
         }
-    };
+        if (!addProfile(newProfileName)) {
+            notice.error('Profile name already exists.');
+            return;
+        }
+        setIsAddOpen(false);
+        setNewProfileName('');
+    }
 
     return (
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
@@ -40,7 +47,9 @@ export function DialogAddProfile() {
                         value={newProfileName}
                         onChange={e => setNewProfileName(e.target.value.trim())}
                         onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleAdd();
+                            if (e.key === 'Enter') {
+                                handleAdd();
+                            }
                         }}
                     />
                 </div>
