@@ -44,7 +44,8 @@ export const doSetFilesFrom_Dnd_Atom = atom(                    // used by DropI
             if (rowPathInputId) {
                 const item = items.find(i => i.id === rowPathInputId);
                 if (item) {
-                    item.path = filePaths[0];
+                    // use splice to update the item and preserve ID
+                    items.splice(items.indexOf(item), 1, { ...item, path: filePaths[0] });
                 } else {
                     items.push(makeNewItem(filePaths[0]));
                 }
