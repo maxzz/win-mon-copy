@@ -40,8 +40,9 @@ function generateConsecutiveChars(len: number) {
 }
 
 function generateRandomChars(len: number) {
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
     return Array.from(
         { length: len },
-        () => String.fromCharCode(Math.floor(Math.random() * 26) + 97)
+        () => chars[Math.floor(Math.random() * chars.length)]
     ).join("");
 }

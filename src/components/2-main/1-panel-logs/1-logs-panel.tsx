@@ -34,12 +34,12 @@ export function LogsPanel({ className }: { className?: string; }) {
             <ScrollArea className="flex-1 bg-background rounded border p-2 font-mono text-xs">
                 <div className="grid grid-cols-[auto_1fr] gap-1">
                     {logs.map(
-                        (log, i) => (
-                            <Fragment key={i}>
+                        (log, idx) => (
+                            <Fragment key={idx}>
                                 <span className="pt-px text-[0.6rem] text-right text-muted-foreground/70">
-                                    {i + 1}
+                                    {idx + 1}
                                 </span>
-                                <div key={i}>
+                                <div>
                                     {log}
                                 </div>
                             </Fragment>
