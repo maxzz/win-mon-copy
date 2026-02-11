@@ -1,16 +1,16 @@
 import { type ComponentPropsWithoutRef } from "react";
-import { classNames } from "@/utils";
-import { LogsPanel } from "./2-logs-panel";
 import { useSnapshot } from "valtio";
-import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
+import { classNames } from "@/utils";
 import { AnimatePresence, motion } from "motion/react";
-import { PathInputGrid } from "./1-path-input-grid";
+import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
+import { LogsPanel } from "../1-panel-logs/1-logs-panel";
+import { PathInputGrid } from "../2-panel-profile/2-path-input-grid";
 
 export function Section2Main({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     return (
         <div className={classNames("px-4 flex flex-col overflow-hidden", className)} {...rest}>
-            <PathsConfigSection className="pt-4" />
             <LogsPanel className="flex-1 my-4" />
+            <PathsConfigSection className="pt-4" />
         </div>
     );
 }

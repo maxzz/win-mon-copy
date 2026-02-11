@@ -1,11 +1,11 @@
 import { Fragment, useEffect, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { classNames } from "@/utils";
-import { doClearLogsAtom, logsAtom } from "@/store/atoms-copy-files";
-import { Label } from "@/components/ui/shadcn/label";
-import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
-import { Button } from "@/components/ui/shadcn";
 import { Trash2 } from "lucide-react";
+import { Label } from "@/components/ui/shadcn/label";
+import { Button } from "@/components/ui/shadcn";
+import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
+import { doClearLogsAtom, logsAtom } from "@/store/atoms-copy-files";
 
 export function LogsPanel({ className }: { className?: string; }) {
     const logs = useAtomValue(logsAtom);

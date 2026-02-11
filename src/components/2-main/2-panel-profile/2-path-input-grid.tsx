@@ -3,11 +3,11 @@ import { useSnapshot } from "valtio";
 import { classNames } from "@/utils";
 import { appSettings } from "@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage";
 import { Reorder, useDragControls, motion, AnimatePresence, type DragControls, type Variants } from "motion/react";
-import { Button } from "@/components/ui/shadcn/button";
-import { Label } from "@/components/ui/shadcn/label";
-import { Input } from "@/components/ui/shadcn/input";
 import { PlusIcon, Trash2 } from "lucide-react";
 import { IconEyeClosed, IconEyeOn, IconRadix_DragHandleDots2 } from "@/components/ui/icons/normal/radix-icons";
+import { Label } from "@/components/ui/shadcn/label";
+import { Button } from "@/components/ui/shadcn/button";
+import { Input } from "@/components/ui/shadcn/input";
 import { PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui/0-all";
 
 export function PathInputGrid() {
