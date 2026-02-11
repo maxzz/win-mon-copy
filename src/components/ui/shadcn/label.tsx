@@ -1,25 +1,27 @@
-import * as React from "react";
+import * as React from "react"; // 01.03.26
 import * as LabelPrimitive from "@radix-ui/react-label";
-import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/utils/index";
 
-const labelVariants = cva(
-    //"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-    "text-xs leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-);
+export function Label({ className, ...rest }: React.ComponentProps<typeof LabelPrimitive.Root>) {
+    return (
+        <LabelPrimitive.Root
+            data-slot="label"
+            className={cn(labelClasses, className)}
+            {...rest}
+        />
+    );
+}
 
-const Label = React.forwardRef<
-    React.ElementRef<typeof LabelPrimitive.Root>,
-    React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
-    VariantProps<typeof labelVariants>
->(({ className, ...props }, ref) => (
-    <LabelPrimitive.Root
-        ref={ref}
-        className={cn(labelVariants(), className)}
-        {...props}
-    />
-));
-Label.displayName = LabelPrimitive.Root.displayName;
-
-export { Label };
+const labelClasses = "\
+text-xs \
+font-medium \
+leading-none \
+select-none \
+\
+group-data-[disabled=true]:pointer-events-none \
+group-data-[disabled=true]:opacity-50 \
+\
+peer-disabled:cursor-not-allowed \
+peer-disabled:opacity-50 \
+flex items-center gap-2 \
+";
