@@ -40,7 +40,7 @@ export function TopMenu() {
                     <DropdownMenuLabel className="py-0 text-xs font-normal">Add Profile...</DropdownMenuLabel>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem className="cursor-pointer" onClick={() => doOpenDeleteDialog(true)} disabled={profiles.length <= 1}>
+                <DropdownMenuItem className="cursor-pointer" onClick={() => doOpenDeleteDialog(true)} disabled={!profiles.length}>
                     <DropdownMenuLabel className="py-0 text-xs font-normal">Delete Profile...</DropdownMenuLabel>
                 </DropdownMenuItem>
 

@@ -34,7 +34,7 @@ export const doDeleteProfileAtom = atom(
 
         const profilesKeys = Object.keys(userData.profiles);
 
-        if (profilesKeys.length > 1) {
+        if (profilesKeys.length) {
             const newProfiles = profilesKeys.filter(p => p !== activeProfile);
             delete appSettings.userData.profiles[activeProfile];
             appSettings.userData.activeProfileId = newProfiles[0];
