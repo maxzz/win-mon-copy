@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/shadcn/label";
 import { Button } from "@/components/ui/shadcn/button";
 import { PathEntry } from "@/store/1-atoms/9-ui-state/8-app-ui/0-all";
 
-export function PathReorderList({ className }: { className?: string }) {
+export function PathReorderList() {
     const { userData } = useSnapshot(appSettings);
     const activeProfile = userData.activeProfileId;
     // `useSnapshot` can yield `readonly` arrays; `motion/react` expects mutable arrays.
@@ -49,60 +49,39 @@ export function PathReorderList({ className }: { className?: string }) {
     };
 
     return (
-        <div className={classNames("p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col gap-2", className)}>
-            <div className="flex items-center justify-between">
-                <Label>
-                    {activeProfile ? `Profile: ${activeProfile}` : "Profile: (none)"}
-                </Label>
-                <Button className="size-6" variant="outline" size="icon" onClick={addPath} disabled={!activeProfile}>
-                    <PlusIcon className="size-4" />
-                </Button>
-            </div>
+        <Reorder.Group
+            className="1max-h-48 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-border flex flex-col"
+            axis="y"
+            layoutScroll
+            // style={{ overflowY: "scroll" }}
+            values={paths}
+            onReorder={onChange}
+        >
+            {paths.map(
+                (entry) => (
+                    <PathEntryRow
+                        entry={entry}
+                        onToggle={() => toggleInUse(entry.id)}
+                        onUpdate={(path) => updatePath(entry.id, path)}
+                        onRemove={() => removePath(entry.id)}
+                        key={entry.id}
+                    />
+                )
+            )}
 
-            <Reorder.Group
-                className="1max-h-48 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-border flex flex-col"
-                axis="y"
-                layoutScroll
-                // style={{ overflowY: "scroll" }}
-                values={paths}
-                onReorder={onChange}
-            >
-                {paths.map(
-                    (entry) => (
-                        <PathEntryRow
-                            entry={entry}
-                            onToggle={() => toggleInUse(entry.id)}
-                            onUpdate={(path) => updatePath(entry.id, path)}
-                            onRemove={() => removePath(entry.id)}
-                            key={entry.id}
-                        />
-                    )
-                )}
-
-                {paths.length === 0 && (
-                    <div
-                        className="text-[10px] text-muted-foreground/50 italic py-4 text-center border border-dashed rounded-md cursor-pointer hover:bg-muted/30 transition-colors"
-                        onClick={addPath}
-                    >
-                        Click to add paths
-                    </div>
-                )}
-            </Reorder.Group>
-        </div>
+            {paths.length === 0 && (
+                <div
+                    className="text-[10px] text-muted-foreground/50 italic py-4 text-center border border-dashed rounded-md cursor-pointer hover:bg-muted/30 transition-colors"
+                    onClick={addPath}
+                >
+                    Click to add paths
+                </div>
+            )}
+        </Reorder.Group>
     );
 }
 
-function PathEntryRow({
-    entry,
-    onToggle,
-    onUpdate,
-    onRemove,
-}: {
-    entry: PathEntry;
-    onToggle: () => void;
-    onUpdate: (path: string) => void;
-    onRemove: () => void;
-}) {
+function PathEntryRow({ entry, onToggle, onUpdate, onRemove }: { entry: PathEntry; onToggle: () => void; onUpdate: (path: string) => void; onRemove: () => void; }) {
     const dragControls = useDragControls();
     return (
         <Reorder.Item
@@ -114,7 +93,7 @@ function PathEntryRow({
             initial="initial"
             animate="initial"
             whileHover="hovered"
-            // variants={parentVariants}
+        // variants={parentVariants}
         >
             <EyeToggle inUse={entry.inUse} onToggle={onToggle} />
 
@@ -136,7 +115,7 @@ const rowActionsVariants: Variants = {
     hovered: { opacity: 1, scale: 1 },
 };
 
-function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void; dragControls: DragControls; variants: Variants }) {
+function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void; dragControls: DragControls; variants: Variants; }) {
     return (
         <motion.div
             className="absolute top-0.5 right-4 px-0.5 flex items-center gap-1"
@@ -172,7 +151,7 @@ function RowActions({ onRemove, dragControls, variants }: { onRemove: () => void
     );
 }
 
-function EyeToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void }) {
+function EyeToggle({ inUse, onToggle }: { inUse: boolean; onToggle: () => void; }) {
     return (
         <Button
             className={classNames("absolute top-1.5 left-2 size-3.5 rounded-none text-muted-foreground flex items-center justify-center cursor-pointer")}
