@@ -9,41 +9,15 @@ import { doAddLogStringAtom, doCopyFilesAtom } from "@/store/atoms-copy-files";
 import { ButtonShowProfileItems } from "../1-btn-show-profile-items";
 import { ProfileSelector } from "../2-profile-selector";
 import { ButtonQuickToggleThemeMode } from "../3-btn-theme-toggle";
-
-function generateSimpleLorem(targetLen: number) {
-    const words = [
-        "lorem", "ipsum", "dolor", "sit", "amet",
-        "consectetur", "adipiscing", "elit", "sed", "do",
-        "eiusmod", "tempor", "incididunt", "ut", "labore",
-        "et", "dolore", "magna", "aliqua", "enim",
-        "ad", "minim", "veniam", "quis", "nostrud",
-        "exercitation", "ullamco", "laboris", "nisi", "aliquip",
-        "ex", "ea", "commodo", "consequat",
-    ] as const;
-
-    let s = "";
-    while (s.length < targetLen) {
-        const w = words[Math.floor(Math.random() * words.length)];
-        s += (s ? " " : "") + w;
-    }
-
-    // Keep it roughly at `targetLen` and avoid ending with a partial word if possible.
-    if (s.length > targetLen) {
-        const cut = s.lastIndexOf(" ", targetLen);
-        s = cut > 0 ? s.slice(0, cut) : s.slice(0, targetLen);
-    }
-
-    return s;
-}
+import { generateTestString } from "@/utils/string-generator";
 
 export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     const copyFiles = useSetAtom(doCopyFilesAtom);
     const addLog = useSetAtom(doAddLogStringAtom);
 
     function addTestLogLine() {
-        const len = 10 + Math.floor(Math.random() * 5000);
-        const payload = generateSimpleLorem(len);
-        addLog(`TEST(len=${len}): ${payload}`);
+        const payload = generateTestString({ min: 20, max: 500 });
+        addLog(`TEST(len=${payload.length}): ${payload}`);
     }
 
     return (
