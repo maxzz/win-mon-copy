@@ -41,7 +41,26 @@ function loadUiInitialState(): AppUi {
     }
 
     const state = mergeDefaultAndLoaded({ defaults: initialAppUi, loaded: storageUi });
+    normalizeLoadedState(state);
     return state;
+}
+
+function normalizeLoadedState(state: AppUi) {
+    // Allow the user to delete the last profile, meaning `profiles` can be empty.
+    // Still ensure the state shape is consistent and avoids `undefined` values.
+    const profiles = state.userData?.profiles ?? {};
+    const keys = Object.keys(profiles);
+
+    if (!keys.length) {
+        state.userData.profiles = {};
+        state.userData.activeProfileId = "";
+        return;
+    }
+
+    const active = state.userData.activeProfileId;
+    if (!active || !(active in profiles)) {
+        state.userData.activeProfileId = keys[0];
+    }
 }
 
 subscribe(appSettings, () => {

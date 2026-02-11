@@ -27,17 +27,23 @@ export const doDeleteProfileAtom = atom(
     null,
     (get, set): boolean => {
         const { userData } = appSettings;
-        const activeProfile = userData.activeProfileId;
-        if (!activeProfile) {
+        const profilesKeys = Object.keys(userData.profiles);
+        if (!profilesKeys.length) {
             return false;
         }
 
-        const profilesKeys = Object.keys(userData.profiles);
+        // If the stored active profile is invalid, fall back to deleting the first profile.
+        const activeProfile = userData.activeProfileId;
+        const profileToDelete = (activeProfile && activeProfile in userData.profiles)
+            ? activeProfile
+            : profilesKeys[0];
 
         if (profilesKeys.length) {
-            const newProfiles = profilesKeys.filter(p => p !== activeProfile);
-            delete appSettings.userData.profiles[activeProfile];
-            appSettings.userData.activeProfileId = newProfiles[0];
+            const newProfiles = profilesKeys.filter(p => p !== profileToDelete);
+            delete appSettings.userData.profiles[profileToDelete];
+            // Allow deleting the last profile: keep the Select controlled by using ""
+            // and avoid rendering the Select when there are no profiles.
+            appSettings.userData.activeProfileId = newProfiles[0] ?? "";
             return true;
         }
         return false;
