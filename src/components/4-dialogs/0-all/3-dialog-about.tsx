@@ -1,12 +1,12 @@
 import { useAtom } from "jotai";
 import { envBuildVersion, envModifiedDate } from "@/utils";
-import { isDlgAboutOpenAtom } from "@/store/atoms-copy-files";
+import { isOpenDlgAboutAtom } from "@/store/atoms-copy-files";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/shadcn/dialog";
 import { Button } from "@/components/ui/shadcn/button";
 import { IconBinocular } from "@/components/ui/icons";
 
 export function DialogAbout() {
-    const [open, onOpenChange] = useAtom(isDlgAboutOpenAtom);
+    const [open, onOpenChange] = useAtom(isOpenDlgAboutAtom);
     // Using hardcoded values matching the C++ resource request
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>

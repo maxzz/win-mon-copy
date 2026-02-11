@@ -3,9 +3,9 @@ import { R2MCalls } from '@/shared/2-gates-in-client-as-atoms/commands-to-main/1
 import { appSettings } from './1-atoms/9-ui-state/0-local-storage-app/1-local-storage';
 
 // UI State Atoms for Profile Dialogs
-export const isDlgAddProfileOpenAtom = atom(false);
-export const isDlgDeleteProfileOpenAtom = atom(false);
-export const isDlgAboutOpenAtom = atom(false);
+export const isOpenDlgAddProfileAtom = atom(false);
+export const isOpenDlgDeleteProfileAtom = atom(false);
+export const isOpenDlgAboutAtom = atom(false);
 
 // Profile Actions
 

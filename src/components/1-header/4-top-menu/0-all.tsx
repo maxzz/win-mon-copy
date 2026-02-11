@@ -8,14 +8,14 @@ import { ThemeSubMenu } from "./2-theme-sub-menu";
 import { exitApp, toggleDevTools } from "@/shared/2-gates-in-client-as-atoms/3-to-main-apis";
 import { ZoomControls } from "./3-zoom-controls";
 import { appSettings } from '@/store/1-atoms/9-ui-state/0-local-storage-app/1-local-storage';
-import { isDlgAboutOpenAtom, isDlgAddProfileOpenAtom, isDlgDeleteProfileOpenAtom } from '@/store/atoms-copy-files';
+import { isOpenDlgAboutAtom, isOpenDlgAddProfileAtom, isOpenDlgDeleteProfileAtom } from '@/store/atoms-copy-files';
 
 export function TopMenu() {
     const { userData } = useSnapshot(appSettings);
     const profiles = userData.profiles ? Object.keys(userData.profiles) : [];
-    const doOpenAddDialog = useSetAtom(isDlgAddProfileOpenAtom);
-    const doOpenDeleteDialog = useSetAtom(isDlgDeleteProfileOpenAtom);
-    const doOpenAboutDialog = useSetAtom(isDlgAboutOpenAtom);
+    const doOpenAddDialog = useSetAtom(isOpenDlgAddProfileAtom);
+    const doOpenDeleteDialog = useSetAtom(isOpenDlgDeleteProfileAtom);
+    const doOpenAboutDialog = useSetAtom(isOpenDlgAboutAtom);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
