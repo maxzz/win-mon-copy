@@ -18,24 +18,24 @@ export function LogsPanel({ className }: { className?: string; }) {
     );
 
     return (
-        <div className={classNames("px-2 bg-muted/50 border-b flex flex-col overflow-hidden", className)}>
+        <div className={classNames("1px-2 bg-muted/50 flex flex-col overflow-hidden", className)}>
 
-            <div className="px-2 flex items-center justify-between">
-                <span className="text-[0.65rem] font-mono text-muted-foreground">
-                    Logs [{logs.length}]
-                    <span className="text-[0.6rem] font-mono text-muted-foreground/70">({logs.reduce((acc, log) => acc + log.length, 0)})</span>
+            <div className="px-2 py-1 border-b flex items-center justify-between">
+                <span className="text-[0.65rem] text-muted-foreground">
+                    Logs:{' '}
+                    <span className="font-mono text-muted-foreground/70">{logs.length}</span>
                 </span>
-                <Button className="group not-disabled:hover:bg-red-500 not-disabled:hover:text-white transition-colors" variant="ghost" size="icon-xs" title="Clear logs" disabled={logs.length === 0} onClick={clearLogs}>
+                <Button className="group size-5 not-disabled:hover:bg-red-500 not-disabled:hover:text-white transition-colors" variant="ghost" size="icon-xs" title="Clear logs" disabled={logs.length === 0} onClick={clearLogs}>
                     <Trash2 className="size-3.5 stroke-1 group-hover:stroke-2!" />
                 </Button>
             </div>
 
-            <ScrollArea className="flex-1 py-1 text-xs font-mono bg-background border rounded">
+            <ScrollArea className="flex-1 pr-3 py-1 text-xs font-mono bg-background">
                 <div className="grid grid-cols-[minmax(1.2rem,auto)_1fr] gap-x-1 gap-y-0.75">
                     {logs.map(
                         (log, idx) => (
                             <Fragment key={idx}>
-                                <span className="pt-px text-[0.6rem] text-right text-muted-foreground/70">
+                                <span className="pt-0.5 text-[0.6rem] text-right text-muted-foreground/70">
                                     {idx + 1}
                                 </span>
                                 <div>
