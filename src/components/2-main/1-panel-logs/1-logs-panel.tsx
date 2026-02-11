@@ -2,7 +2,6 @@ import { Fragment, useEffect, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { classNames } from "@/utils";
 import { Trash2 } from "lucide-react";
-import { Label } from "@/components/ui/shadcn/label";
 import { Button } from "@/components/ui/shadcn";
 import { ScrollArea } from "@/components/ui/shadcn/scroll-area";
 import { doClearLogsAtom, logsAtom } from "@/store/atoms-copy-files";
@@ -19,20 +18,20 @@ export function LogsPanel({ className }: { className?: string; }) {
     );
 
     return (
-        <div className={classNames("p-2 border rounded-md bg-muted/50 overflow-hidden flex flex-col", className)}>
-            <Label className="mb-2">
-                <div className="flex items-center justify-between">
-                    <span>
-                        Logs ({logs.length})
-                    </span>
-                    <Button className="not-disabled:hover:text-red-700" variant="outline" size="icon-xs" title="Clear logs" disabled={logs.length === 0} onClick={clearLogs}>
-                        <Trash2 />
-                    </Button>
-                </div>
-            </Label>
+        <div className={classNames("px-2 bg-muted/50 border-b flex flex-col overflow-hidden", className)}>
 
-            <ScrollArea className="flex-1 bg-background rounded border p-2 font-mono text-xs">
-                <div className="grid grid-cols-[auto_1fr] gap-1">
+            <div className="px-2 flex items-center justify-between">
+                <span className="text-[0.65rem] font-mono text-muted-foreground">
+                    Logs [{logs.length}]
+                    <span className="text-[0.6rem] font-mono text-muted-foreground/70">({logs.reduce((acc, log) => acc + log.length, 0)})</span>
+                </span>
+                <Button className="group not-disabled:hover:bg-red-500 not-disabled:hover:text-white transition-colors" variant="ghost" size="icon-xs" title="Clear logs" disabled={logs.length === 0} onClick={clearLogs}>
+                    <Trash2 className="size-3.5 stroke-1 group-hover:stroke-2!" />
+                </Button>
+            </div>
+
+            <ScrollArea className="flex-1 py-1 text-xs font-mono bg-background border rounded">
+                <div className="grid grid-cols-[minmax(1.2rem,auto)_1fr] gap-x-1 gap-y-0.75">
                     {logs.map(
                         (log, idx) => (
                             <Fragment key={idx}>
@@ -46,7 +45,7 @@ export function LogsPanel({ className }: { className?: string; }) {
                         )
                     )}
                 </div>
-                
+
                 <div ref={scrollRef} />
             </ScrollArea>
         </div>
