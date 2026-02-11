@@ -16,7 +16,7 @@ export function Section1Header({ className, ...rest }: ComponentPropsWithoutRef<
     const addLog = useSetAtom(doAddLogStringAtom);
 
     function addTestLogLine() {
-        const payload = generateTestString({ min: 20, max: 500 });
+        const payload = generateTestString({ min: 20, max: 256 });
         addLog(`TEST(len=${payload.length}): ${payload}`);
     }
 

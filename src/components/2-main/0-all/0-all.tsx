@@ -8,9 +8,9 @@ import { PathInputGrid } from "../2-panel-profile/2-path-input-grid";
 
 export function Section2Main({ className, ...rest }: ComponentPropsWithoutRef<"div">) {
     return (
-        <div className={classNames("px-4 flex flex-col overflow-hidden", className)} {...rest}>
-            <LogsPanel className="flex-1 my-4" />
-            <PathsConfigSection className="pt-4" />
+        <div className={classNames("flex flex-col overflow-hidden", className)} {...rest}>
+            <LogsPanel className="flex-1" />
+            <PathsConfigSection className="" />
         </div>
     );
 }
