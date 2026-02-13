@@ -1,0 +1,8 @@
+02.11.26
+	TODO: copier: 
+        show common path aliases
+		messages: 
+			From path
+				Copied dest-full-name
+				Same time, skipping: filename
+				Found in use: dest-full-name

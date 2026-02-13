@@ -1,0 +1,14 @@
+{
+	"files": [
+		{
+			"path": "src/assets/docs/todos.txt",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 1,
+					"label": "TODOs"
+				}
+			]
+		}
+	]
+}
